@@ -1,0 +1,229 @@
+<div class="p-8 space-y-6 animate-in fade-in duration-500">
+
+
+  <form (submit)="onSubmit($event)" class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+
+    <div class="space-y-6">
+      <section class="bg-background2 border border-outline  rounded-xl p-6 shadow-xl">
+        <h2 class="text-xl font-medium text-foreground mb-5">Параметры задачи</h2>
+
+        <hr class="border-t border-outline  -mx-6 my-6">
+        <div class="space-y-4">
+
+
+          <div class="space-y-1.5">
+            <label class="text-base font-medium text-gray9 mb-2 block">Тип задачи</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              @for (type of taskTypes(); track type.label) {
+                <button
+                  type="button"
+                  (click)="selectedTaskType.set(type.label)"
+                  [class.border-zinc-500]="selectedTaskType() === type.label"
+                  [class.bg-gray12]="selectedTaskType() === type.label"
+                  [class.text-foreground]="selectedTaskType() === type.label"
+                  class="flex items-center gap-3 p-3.5 rounded-lg border border-outline bg-zinc-900\/50 text-muted-foreground hover:text-zinc-300 hover:bg-gray12 transition-all group"
+                  >
+
+                <div class="flex flex-col items-start spase-y-1">
+                  <svg [lucideIcon]="type.icon" [class.text-lime-600]="selectedTaskType() === type.label" class="text-base  opacity-70 group-hover:opacity-100"></svg>
+
+                  <div class="text-xl font-semibold text-foreground">{{ type.label }}</div>
+                  <div class="text-base text-gray10 tracking-wide">{{ type.desc }}</div>
+                </div>
+                </button>
+              }
+            </div>
+          </div>
+
+
+          <div class="space-y-1.5">
+            <label class="text-base font-medium text-gray9">URL статьи на otvet.mail.ru</label>
+            <input
+              type="text"
+              name="targetUrl"
+              [(ngModel)]="urlValue"
+              placeholder="https://otvet.mail.ru/question/..."
+              class="w-full text-2xl bg-background border border-outline rounded-lg px-4 py-3  text-foreground placeholder:text-gray10 focus:outline-none focus:ring-1 focus:ring-zinc-700 focus:bg-zinc-900/80 transition-all"   >
+          </div>
+          @if (selectedTaskType() === 'Комментарий') {
+            <div class="space-y-1.5 animate-in fade-in duration-300">
+              <label class="text-base font-medium text-gray9">Текст комментария</label>
+              <textarea
+                rows="4"
+                name="commentText"
+                [(ngModel)]="commentText"
+                placeholder="Введите текст ответа..."
+                class="w-full bg-background border border-outline rounded-lg px-3 py-2 text-base text-zinc-300 placeholder:text-gray10 focus:outline-none focus:ring-1 focus:ring-zinc-700 transition-all resize-none"
+              ></textarea>
+            </div>
+
+
+          <div class="space-y-1.5">
+            <label class="text-base font-mono text-gray9">Ссылка (необязательно)</label>
+            <input
+              type="text"
+              name="maybeTargetUrl"
+              [(ngModel)]="maybeTargetUrl"
+              placeholder="https://..."
+              class="w-full bg-background border border-outline rounded-lg px-3 py-2 text-base text-zinc-300 placeholder:text-gray10 focus:outline-none focus:ring-1 focus:ring-zinc-700 transition-all"
+            >
+          </div>
+
+
+            <div class="flex items-center justify-between px-4 py-2 bg-background border border-outline  rounded-lg animate-in fade-in duration-200">
+              <div>
+                <label class="text-base font-regular text-zinc-300">Накрутка лайков после публикации</label>
+                <p class="text-base text-gray10">Автоматически после публикации </p>
+              </div>
+              <input
+                type="checkbox"
+                class="ios-toggle"
+                [checked]="enableLikes()"
+                (change)="enableLikes.set(!enableLikes())"
+              >
+            </div>
+          }
+          @if (enableLikes() || selectedTaskType() !== 'Комментарий') {
+            <div class="space-y-4 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
+
+
+            <label class="text-base font-mono text-gray9">Кол-во лайков</label>
+            <input
+              type="number"
+              value="50"
+              name="likesCount"  [(ngModel)]="likesCount"
+              class="w-full bg-background border border-outline rounded-lg px-3 py-1 text-2xl text-muted-foreground"
+            >
+
+            <div class="space-y-1.5">
+                <label class="text-base font-mono text-gray10 tracking-tight">
+                  Задержка между действиями
+                </label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  @for (option of delayOptions(); track option.value) {
+                    <button
+                      type="button"
+                      (click)="selectedDelay.set(option.value)"
+                      [class.border-zinc-200]="selectedDelay() === option.value"
+                      [class.bg-gray12]="selectedDelay() === option.value"
+                      class="flex flex-col items-start p-4 rounded-xl border border-outline bg-background transition-all cursor-pointer group hover:bg-gray12"
+                      >
+                      <div class="text-base font-bold transition-colors" [class.text-white]="selectedDelay() === option.value" [class.text-zinc-400]="selectedDelay() !== option.value">
+                        {{ option.label }}
+                      </div>
+                      <div class="text-sm font-mono mt-1 transition-colors" [class.text-gray10]="selectedDelay() === option.value" [class.text-zinc-600]="selectedDelay() !== option.value">
+                        {{ option.desc }}
+                      </div>
+                    </button>
+                  }
+                </div>
+              </div>
+
+
+            </div>
+
+
+          }
+        </div>
+      </section>
+
+      <div class="flex items-center gap-3 w-full">
+        <button type="submit" class="flex-1 bg-primary hover:bg-[#6ab900] active:scale-[0.98] text-black font-bold py-3 rounded-lg transition-all shadow-[0_4px_20px_rgba(94,165,0,0.2)] flex items-center justify-center gap-2 cursor-pointer">
+          <i class="pi pi-play text-base"></i>
+          Запустить задачу
+        </button>
+        @if (selectedTaskType() === 'Комментарий') {
+        <button type="button" class="flex-1 bg-transparent border border-outline hover:bg-zinc-800/50 active:scale-[0.98] text-foreground font-mono py-3 rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+          Сгенерировать через AI
+        </button>
+        }
+      </div>
+    </div>
+
+    <div class="space-y-6 lg:sticky ">
+
+      <section class="bg-background2 border border-outline rounded-xl p-6 shadow-xl space-y-4">
+        <h2 class="text-sm font-semibold text-foreground">Статус выполнения</h2>
+        <hr class="border-outline opacity-50 -mx-6" >
+        @if (selectedTaskType() === 'Комментарий') {
+          <div class="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
+            @for (item of [1,2,3,4,5]; track $index) {
+              <div class="flex items-center justify-between group">
+                <div class="space-y-0.5">
+                  <div class="text-base font-semibold text-foreground group-hover:text-white transition-colors">user_kotov88</div>
+                  <div class="text-[13px] text-gray10">Вопрос #1203</div>
+                  <div class="flex items-center gap-1.5 text-[12px] text-lime-500">
+                    <i class="pi pi-check text-[10px]"></i>
+                    <span>Опубликован</span>
+                  </div>
+                </div>
+                <div class="text-[13px] text-blue-400 hover:underline cursor-pointer font-mono">otvet.mail.ru/q/12340</div>
+                <div class="text-right">
+
+                  <div class="text-[12px] text-gray9 mt-1">14:30</div>
+                </div>
+              </div>
+              @if (!$last) { <hr class="border-outline opacity-50"> }
+            }
+          </div>
+        } @else {
+          <div class="space-y-4 animate-in fade-in zoom-in-95 duration-500">
+            <div class="bg-background border border-outline rounded-xl p-5 space-y-3">
+              <div class="flex justify-between items-end">
+                <div>
+                  <div class="text-base font-bold text-foreground">
+                    {{ isRunning() ? 'Выполняется задание' : (activeTaskId() ? 'Завершено' : 'Ожидание запуска') }}
+                  </div>
+                  <div class="text-[12px] text-gray10 mt-0.5">
+                    {{ selectedTaskType() }} ·
+                    <span class="text-zinc-300">{{ taskProgress() }}% завершено</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-full bg-lime950 h-1.5 rounded-full overflow-hidden">
+                <div
+                  class="bg-primary h-full transition-all duration-500 rounded-full"
+                  [style.width.%]="taskProgress()"
+                  [class.shadow-\[0_0_12px_rgba\(94\,165\,0\,0\.4\)\]]="isRunning()">
+                </div>
+              </div>
+            </div>
+
+            <div class="font-mono text-[13px] space-y-1 max-h-[300px] overflow-y-auto custom-scrollbar">
+              @for (log of taskLogs(); track log.timestamp) {
+                <div class="flex items-baseline gap-2 py-0.5">
+                  <span class="text-gray9 shrink-0 w-16">{{ formatLogTime(log.timestamp) }}</span>
+                  <span class="text-sky-400 shrink-0 w-32 truncate">[{{ log.accountLogin }}]</span>
+                  <span class="flex-1" [ngClass]="logColor(log.status)">{{ log.message }}</span>
+                  @if (logIcon(log.status)) {
+                    <span class="shrink-0" [ngClass]="logIconColor(log.status)">{{ logIcon(log.status) }}</span>
+                  }
+                </div>
+              } @empty {
+                <div class="text-gray9 text-center py-6">Логи появятся после запуска задачи</div>
+              }
+            </div>
+          </div>
+        }
+      </section>
+
+
+
+      <section class="bg-background2 border border-outline  rounded-xl p-6 shadow-xl space-y-4">
+        <h2 class="text-sm font-semibold text-foreground">Уведомления</h2>
+        <div class="space-y-2.5">
+          @for (notif of notifications(); track notif.label) {
+            <div class="border border-outline  rounded-xl p-4">
+            <div class="flex items-center justify-between l">
+              <span class="text-base font-medium text-zinc-300 ">{{ notif.label }}</span>
+              <input type="checkbox" class="ios-toggle" >
+            </div>
+            </div>
+          }
+        </div>
+      </section>
+
+    </div>
+  </form>
+</div>

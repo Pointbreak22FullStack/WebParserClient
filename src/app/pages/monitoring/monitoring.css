@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+/* Стилизация таблицы для эффекта стеклянной панели */
+table {
+  background: linear-gradient(to bottom, transparent, rgba(9, 9, 11, 0.2));
+}
+
+th {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Эффект при наведении на строку */
+tr:hover td {
+  color: #fff;
+}
+
+/* Тонкая настройка адаптивности truncate */
+.truncate {
+  display: block;
+}

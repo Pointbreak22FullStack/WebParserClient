@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+/* Кастомный скроллбар для области текста */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 10px;
+}
+
+/* Эффект свечения для статуса */
+.text-emerald-500 {
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+}
+
+/* Анимация для кнопок */
+button:active {
+  transform: scale(0.98);
+}

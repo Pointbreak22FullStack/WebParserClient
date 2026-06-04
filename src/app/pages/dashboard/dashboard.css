@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+/* Кастомная анимация появления карточек */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Стили для таблиц */
+table th {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+/* Плавный переход для прогресс-баров */
+.transition-all {
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}

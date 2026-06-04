@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+/* Кастомный скроллбар для истории, если она станет длинной */
+section {
+  scrollbar-width: thin;
+  scrollbar-color: #27272a transparent;
+}
+
+/* Плавный переход для статусов */
+.pi {
+  transition: transform 0.3s ease;
+}
+
+/* Анимация вращения для иконки повтора */
+.pi-refresh {
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Улучшение читаемости текста в инпутах */
+input, select, textarea {
+  letter-spacing: 0.01em;
+}

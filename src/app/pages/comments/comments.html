@@ -1,0 +1,80 @@
+<div class="p-8 space-y-6 animate-in fade-in duration-500">
+
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-white tracking-tight">Публикация комментариев</h1>
+    <p class="text-zinc-500 text-xs mt-1 font-mono">FR3.1 — FR3.3</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+
+    <section class="bg-[#0d0d0d] border border-zinc-800/50 rounded-xl p-6 shadow-xl space-y-6">
+      <h2 class="text-sm font-semibold text-white">Новый комментарий</h2>
+
+      <div class="space-y-4">
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-zinc-400">Аккаунт</label>
+          <select class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-3 py-2.5 text-xs text-zinc-300 focus:outline-none focus:ring-1 focus:ring-zinc-700 transition-all">
+            <option value="user_kotov88">user_kotov88</option>
+          </select>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-zinc-400">Ссылка на вопрос</label>
+          <input
+            type="text"
+            placeholder="https://otvet.mail.ru/question/..."
+            class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-3 py-2.5 text-xs text-zinc-300 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-700 transition-all"
+          >
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="flex justify-between items-center">
+            <label class="text-xs font-medium text-zinc-400">Текст комментария (до 1 000 символов)</label>
+            <span class="text-[10px] text-zinc-600 font-mono">0 / 1000</span>
+          </div>
+          <textarea
+            rows="8"
+            placeholder="Введите текст..."
+            class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-3 py-2.5 text-xs text-zinc-300 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-700 transition-all resize-none"
+          ></textarea>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <button class="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-200 py-2.5 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 border border-zinc-700/50">
+            <span>✨</span> Сгенерировать через AI
+          </button>
+          <button class="w-full bg-white hover:bg-zinc-200 text-black py-2.5 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-white/5">
+            <i class="pi pi-play text-[10px]"></i> Отправить
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#0d0d0d] border border-zinc-800/50 rounded-xl p-6 shadow-xl flex flex-col h-full">
+      <h2 class="text-sm font-semibold text-white mb-5">История публикаций</h2>
+
+      <div class="space-y-1 divide-y divide-zinc-800/50">
+        @for (item of history(); track item.id) {
+          <div class="py-4 first:pt-0 group cursor-default">
+            <div class="flex justify-between items-start mb-1">
+              <span class="text-xs font-semibold text-zinc-300 group-hover:text-white transition-colors">{{ item.user }}</span>
+              <span class="text-[10px] text-zinc-600 font-mono">{{ item.time }}</span>
+            </div>
+            <div class="text-[11px] text-zinc-500 mb-2">Вопрос #{{ item.questionId }}</div>
+
+            <div class="flex items-center gap-1.5">
+              <i class="pi" [ngClass]="item.statusIcon" [style.color]="item.statusColor" style="font-size: 8px;"></i>
+              <span [style.color]="item.statusColor" class="text-[10px] font-medium">
+                {{ item.statusText }}
+              </span>
+              @if (item.retry) {
+                <span class="text-[10px] text-zinc-600 ml-1">→ {{ item.retry }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-300">
+
+  <div class="bg-[#111111] border border-zinc-800 w-full max-w-[440px] rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+
+    <div class="p-6">
+      <h2 class="text-lg font-bold text-white leading-tight">
+        {{ isEditMode() ? 'Редактировать прокси' : 'Добавить прокси' }}
+      </h2>
+      <p class="text-zinc-500 text-xs mt-1">Введите данные прокси-сервера</p>
+    </div>
+
+    <div [formGroup]="proxyForm" class="px-6 pb-6 space-y-5">
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-medium text-zinc-400 ml-1">IP-адрес</label>
+          <input
+            formControlName="ipAddress"
+            type="text"
+            placeholder="192.168.1.1"
+            class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-zinc-700 focus:outline-none focus:border-zinc-600 transition-colors"
+          >
+        </div>
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-medium text-zinc-400 ml-1">Порт</label>
+          <input
+            formControlName="port"
+            type="text"
+            placeholder="8080"
+            class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-zinc-700 focus:outline-none focus:border-zinc-600 transition-colors"
+          >
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-medium text-zinc-400 ml-1">Логин</label>
+          <input
+            formControlName="login"
+            type="text"
+            placeholder="user"
+            autocomplete="off"
+            class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-zinc-700 focus:outline-none focus:border-zinc-600 transition-colors"
+          >
+        </div>
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-medium text-zinc-400 ml-1">Пароль</label>
+          <input
+            formControlName="password"
+            type="password"
+            placeholder="••••••••"
+            autocomplete="new-password"
+            class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-zinc-700 focus:outline-none focus:border-zinc-600 transition-colors"
+          >
+        </div>
+      </div>
+
+      <div class="space-y-1.5">
+        <label class="text-[11px] font-medium text-zinc-400 ml-1">Тип</label>
+        <div class="relative">
+          <select formControlName="type" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-zinc-600 appearance-none cursor-pointer transition-colors">
+            <option [ngValue]="0">Http</option>
+            <option [ngValue]="1">Socks5</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-500">
+            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="p-4 bg-[#0d0d0d]/40 border-t border-zinc-800/50 flex justify-end gap-2">
+      <button
+        (click)="closeModal.emit()"
+        class="text-zinc-400 hover:text-white text-xs font-semibold px-5 py-2.5 transition-colors"
+      >
+        Отмена
+      </button>
+      <button (click)="onSubmit()" [disabled]="proxyForm.invalid" class="bg-white hover:bg-zinc-200 text-black px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm">
+        {{ isEditMode() ? 'Сохранить изменения' : 'Добавить прокси' }}
+      </button>
+    </div>
+
+  </div>
+</div>

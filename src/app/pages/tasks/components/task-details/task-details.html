@@ -1,0 +1,88 @@
+<div class="bg-[#0a0a0a] border border-zinc-800/50 rounded-lg p-5 font-mono">
+
+  <!-- Сводная панель прогресса -->
+  <div class="bg-zinc-900/40 border border-zinc-800/50 rounded px-4 py-2 flex justify-between items-center mb-6">
+    <div class="flex gap-4 text-[10px] uppercase tracking-wider">
+      <span class="text-zinc-400">Всего: <span class="text-white">{{ stats().total }}</span></span>
+      <span class="text-zinc-400">Готово: <span class="text-[#9eff00]">{{ stats().done }}</span></span>
+      <span class="text-zinc-400">В работе: <span class="text-blue-400">{{ stats().active }}</span></span>
+      <span class="text-zinc-400">В очереди: <span class="text-white">{{ stats().queue }}</span></span>
+      <span class="text-zinc-400">Ошибки: <span class="text-red-500">{{ stats().errors }}</span></span>
+    </div>
+    <div class="text-[10px] text-zinc-400 uppercase">Прогресс: <span class="text-[#9eff00]">{{ stats().progress }}%</span></div>
+  </div>
+
+  <h3 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4">Подзадачи (по аккаунтам)</h3>
+
+  <!-- Фильтры-табы -->
+  <div class="flex gap-2 mb-5">
+    @for (tab of [
+      { label: 'Все',       count: stats().total  },
+      { label: 'Готово',    count: stats().done   },
+      { label: 'В работе',  count: stats().active },
+      { label: 'В очереди', count: stats().queue  },
+      { label: 'Ошибка',    count: stats().errors }
+    ]; track tab.label) {
+      <button (click)="activeFilter.set(tab.label)"
+              class="text-[10px] font-bold px-3 py-1 rounded flex items-center gap-1.5 transition-all border font-mono"
+              [class.tab-active]="activeFilter() === tab.label"
+              [class.tab-inactive]="activeFilter() !== tab.label">
+        {{ tab.label }}
+        <span class="opacity-40 text-[9px]">·</span>
+        {{ tab.count }}
+      </button>
+    }
+  </div>
+
+  <!-- Таблица подзадач -->
+  <div class="border border-zinc-800/50 rounded-md overflow-hidden">
+    <table class="w-full text-left text-[11px] border-collapse">
+      <thead class="bg-zinc-900/60 text-zinc-500 uppercase text-[9px] tracking-widest border-b border-zinc-800/50">
+        <tr>
+          <th class="px-4 py-2 w-10 font-medium">#</th>
+          <th class="px-4 py-2 w-1/2 font-medium">Аккаунт</th>
+          <th class="px-4 py-2 font-medium">Статус</th>
+          <th class="px-4 py-2 text-right font-medium">Завершено</th>
+          <th class="px-4 py-2 text-right font-medium">Длительность</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-zinc-800/30">
+        @for (acc of filteredAccounts(); track acc.accountId; let i = $index) {
+          <tr class="hover:bg-zinc-800/20 transition-colors">
+            <td class="px-4 py-2.5 text-zinc-600">{{ i + 1 }}</td>
+            <td class="px-4 py-2.5">
+              <span class="text-white font-bold">{{ acc.accountSiteNick }}</span>
+              <span class="text-zinc-600 mx-2">·</span>
+              <span class="text-zinc-500 text-[10px]">{{ getAccountStatusLabel(acc.accountStatus) }}</span>
+            </td>
+            <td class="px-4 py-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full" [ngClass]="getStatusDot(acc.status)"></span>
+                <span [ngClass]="getStatusClass(acc.status)">{{ getStatusLabel(acc.status) }}</span>
+              </div>
+            </td>
+            <td class="px-4 py-2.5 text-right text-zinc-400">{{ formatTime(acc.completedAt) }}</td>
+            <td class="px-4 py-2.5 text-right text-zinc-400">{{ formatDuration(acc.durationSeconds) }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Нижние действия -->
+  <div class="flex gap-6 mt-6 items-center">
+    <button class="flex items-center gap-2 text-[11px] font-bold text-white border border-zinc-700 rounded px-3 py-1.5 hover:bg-zinc-800 transition-all">
+      <svg class="w-3 h-3 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"/>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+      </svg>
+      Перезапустить ошибки ({{ stats().errors }})
+    </button>
+    <button class="text-white text-[11px] font-bold hover:text-zinc-400 transition-colors">
+      Отменить очередь
+    </button>
+    <button class="text-white text-[11px] font-bold hover:text-zinc-400 transition-colors">
+      Открыть детали задачи
+    </button>
+  </div>
+</div>

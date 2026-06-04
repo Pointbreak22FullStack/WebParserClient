@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+/* Применяем моноширинный шрифт для IP-адресов, чтобы они ровно смотрелись в колонке */
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  letter-spacing: -0.02em;
+}
+
+/* Небольшая плавная подсветка строки таблицы при наведении */
+tr {
+  will-change: background-color;
+}

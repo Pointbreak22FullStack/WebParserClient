@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+/* Кастомная анимация появления контента */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Стили заголовков секций (Параметры, Расписание и т.д.) */
+h2 {
+  letter-spacing: -0.01em;
+}
+
+/* Тонкая настройка плейсхолдеров для инпутов */
+input::placeholder, textarea::placeholder {
+
+}
+
+/* Базовая стилизация для инпутов */
+input, textarea, select {
+  font-family: inherit;
+
+  line-height: 1.5;
+}
+
+/* Убираем стрелки у числовых инпутов в Chrome/Safari */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Убираем стрелки у числовых инпутов в Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

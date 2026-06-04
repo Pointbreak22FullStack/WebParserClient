@@ -1,0 +1,222 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+/* ── Page layout ─────────────────────────────────── */
+.tasks-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 14px;
+}
+
+/* ── Button variants ─────────────────────────────── */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  color: #a1a1aa;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-outline:hover {
+  background: #1c1c1c;
+  color: #e4e4e7;
+  border-color: #3a3a3a;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #9eff00;
+  border: none;
+  border-radius: 8px;
+  color: #0a0a0a;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+.btn-primary:hover { background: #85d600; }
+
+.btn-outline-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  color: #a1a1aa;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-outline-sm:hover { background: #1c1c1c; color: #e4e4e7; }
+
+.btn-destructive-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(255, 100, 103, 0.08);
+  border: 1px solid rgba(255, 100, 103, 0.2);
+  border-radius: 6px;
+  color: #ff6467;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-destructive-sm:hover { background: rgba(255, 100, 103, 0.15); }
+
+/* ── Bulk bar ────────────────────────────────────── */
+.bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  animation: slideDown 0.18s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Table container ─────────────────────────────── */
+.table-wrap {
+  background: rgba(17, 17, 17, 0.5);
+  border: 1px solid rgba(39, 39, 42, 0.5);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── Table header cells ──────────────────────────── */
+.th-cell {
+  padding: 12px 14px;
+  border-bottom: 1px solid #1f1f1f;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #52525b;
+  white-space: nowrap;
+}
+
+/* ── Table data cells ────────────────────────────── */
+.td-cell {
+  padding: 13px 14px;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(39, 39, 42, 0.35);
+}
+
+/* ── Table row ───────────────────────────────────── */
+.table-row {
+  transition: background 0.12s;
+  cursor: pointer;
+}
+.table-row:hover { background: rgba(255, 255, 255, 0.025); }
+.table-row.selected { background: rgba(158, 255, 0, 0.04); }
+.table-row.selected .td-cell { border-bottom-color: rgba(158, 255, 0, 0.08); }
+
+/* ── Sort button ─────────────────────────────────── */
+.sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition: color 0.12s;
+  padding: 0;
+}
+.sort-btn:hover { color: #a1a1aa; }
+
+/* ── Status badge ────────────────────────────────── */
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  border: 1px solid currentColor;
+  opacity: 0.85;
+}
+
+/* ── Expand button ───────────────────────────────── */
+.task-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #71717a;
+}
+.task-expand-btn:hover { color: #e4e4e7; }
+.task-expand-btn i {
+  transition: transform 0.15s ease;
+}
+.task-expand-btn.open i {
+  transform: rotate(90deg);
+}
+
+/* ── Checkbox ────────────────────────────────────── */
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #3f3f46;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative;
+  background: transparent;
+}
+.checkbox:hover { border-color: #71717a; }
+.checkbox.checked {
+  background: #9eff00;
+  border-color: #9eff00;
+}
+.checkbox.checked::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 4px;
+  border-left: 1.5px solid #0a0a0a;
+  border-bottom: 1.5px solid #0a0a0a;
+  transform: translateY(-1px) rotate(-45deg);
+}
+.checkbox.indeterminate {
+  border-color: #9eff00;
+}
+.checkbox.indeterminate::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 1.5px;
+  background: #9eff00;
+  border-radius: 1px;
+}

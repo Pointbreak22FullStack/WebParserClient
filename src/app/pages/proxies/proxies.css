@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+/* Моноширинный шрифт важен для колонки IP-адресов, чтобы цифры и точки стояли ровно */
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  letter-spacing: -0.02em;
+}
+
+tr {
+  will-change: background-color;
+}

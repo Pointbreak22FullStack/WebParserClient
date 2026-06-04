@@ -1,0 +1,118 @@
+<div class="scrim" [class.visible]="task()" (click)="closed.emit()"></div>
+
+<aside class="drawer" [class.open]="task()">
+  @if (task(); as t) {
+    <!-- Header -->
+    <div class="flex items-start justify-between px-5 py-4 border-b border-zinc-800/80 shrink-0">
+      <div>
+        <p class="text-[10px] text-zinc-500 uppercase tracking-widest font-medium mb-1">{{ getTypeLabel(t.type) }}</p>
+        <h2 class="text-base font-bold text-white">#{{ t.id.slice(0, 8) }}</h2>
+      </div>
+      <button (click)="closed.emit()"
+              class="w-8 h-8 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 flex items-center justify-center text-zinc-500 hover:text-white transition-colors mt-0.5">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Status row -->
+    <div class="px-5 py-3 border-b border-zinc-800/50 flex items-center gap-3 shrink-0">
+      <span class="px-2.5 py-1 rounded text-[10px] font-bold border"
+            [ngClass]="getStatusClass(t.status)">
+        {{ getStatusLabel(t.status) }}
+      </span>
+      @if (t.durationSeconds) {
+        <span class="text-zinc-600 text-xs">{{ formatDuration(t.durationSeconds) }}</span>
+      }
+      <span class="ml-auto text-zinc-600 text-[11px]">{{ formatCreated(t.createdAt) }}</span>
+    </div>
+
+    <!-- Body -->
+    <div class="flex-1 min-h-0 overflow-y-auto px-5 py-4 space-y-5 custom-scrollbar">
+
+      <!-- URL -->
+      <div>
+        <p class="detail-label">URL статьи</p>
+        <a [href]="t.targetUrl" target="_blank" rel="noopener"
+           class="text-blue-400 hover:text-blue-300 text-[11px] font-mono break-all transition-colors leading-relaxed">
+          {{ t.targetUrl }}
+        </a>
+      </div>
+
+      <!-- Account -->
+      <div>
+        <p class="detail-label">Аккаунт</p>
+        <div class="flex items-center gap-2 bg-zinc-900/50 border border-zinc-800 rounded-lg px-3 py-2.5">
+          <span class="w-2 h-2 rounded-full shrink-0"
+                [ngClass]="getAccountDotClass(t.accounts[0].status)"></span>
+          <span class="text-zinc-200 text-sm">{{ t.accounts[0].accountSiteNick }}</span>
+          <span class="ml-auto px-2 py-0.5 rounded bg-zinc-800 text-zinc-500 text-[9px] uppercase tracking-wider">
+            {{ getAccountStatusLabel(t.accounts[0].status) }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Results -->
+      @if (getResultItems(t).length) {
+        <div>
+          <p class="detail-label">Результат</p>
+          <div class="space-y-2">
+            @for (res of getResultItems(t); track res.type) {
+              <div class="flex items-center gap-3">
+                <span class="text-xs w-3 text-center shrink-0" [ngClass]="getResultColor(res.type)">
+                  {{ getResultIcon(res.type) }}
+                </span>
+                <span class="text-xs text-zinc-400 flex-1">{{ getResultLabel(res.type) }}</span>
+                <span class="text-sm font-bold font-mono" [ngClass]="getResultColor(res.type)">{{ res.count }}</span>
+              </div>
+            }
+          </div>
+          @if (successPercent() > 0) {
+            <div class="mt-4">
+              <div class="flex justify-between text-[10px] text-zinc-600 mb-1.5">
+                <span>Успешность</span>
+                <span>{{ successPercent() }}%</span>
+              </div>
+              <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                <div class="h-full bg-[#9eff00] rounded-full transition-all duration-500"
+                     [style.width.%]="successPercent()"></div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      @if (getHistory(t).length) {
+        <div>
+          <p class="detail-label">История</p>
+          <div class="bg-black/40 rounded-lg border border-zinc-800/50 p-3 space-y-2.5">
+            @for (entry of getHistory(t); track $index) {
+              <div class="flex gap-3 text-[11px]">
+                <span class="text-zinc-700 font-mono shrink-0">{{ formatHistoryTime(entry.time) }}</span>
+                <span [ngClass]="getLogClass(entry.level)">{{ entry.message }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+    </div>
+
+    <!-- Footer -->
+    <div class="border-t border-zinc-800 px-5 py-4 flex gap-2.5 shrink-0">
+      @if (isRetryable()) {
+        <button class="flex-1 flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium py-2.5 rounded-lg transition-colors">
+          <i class="icon-btn icon-retry text-zinc-400"></i>
+          Перезапустить
+        </button>
+      }
+      <button class="flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium px-4 py-2.5 rounded-lg border border-red-500/20 transition-colors"
+              [class.flex-1]="!isRetryable()">
+        <i class="icon-btn icon-trash" style="color: rgb(248 113 113 / 0.7)"></i>
+        Удалить
+      </button>
+    </div>
+  }
+</aside>

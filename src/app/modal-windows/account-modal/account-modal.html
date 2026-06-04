@@ -1,0 +1,79 @@
+<div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-300">
+  <div class="bg-[#121212] border border-zinc-800 w-full max-w-[440px] rounded-2xl shadow-2xl overflow-hidden">
+
+    <div class="p-6">
+      <h2 class="text-lg font-bold text-white">{{ isEditMode() ? 'Редактировать' : 'Добавить аккаунт' }}</h2>
+      <p class="text-zinc-500 text-xs mt-1">Бот автоматически авторизуется и сохранит сессию</p>
+    </div>
+
+    <form [formGroup]="accountForm" class="px-6 pb-6 space-y-4">
+
+
+
+      <div class="space-y-4 animate-in fade-in zoom-in-95 duration-200">
+        <div class="grid grid-cols-[100px_1fr] gap-2">
+          <div class="space-y-1.5">
+            <label class="text-[11px] font-medium text-zinc-400 ml-1">Код</label>
+            <input formControlName="countryCode" type="text" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-[11px] font-medium text-zinc-400 ml-1">Номер телефона</label>
+            <input formControlName="phoneBody" type="text" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white">
+          </div>
+        </div>
+      </div>
+
+
+        <div class="space-y-4 animate-in fade-in zoom-in-95 duration-200">
+          <div class="grid grid-cols-2 gap-2">
+          <div class="space-y-1.5">
+            <label class="text-[11px] font-medium text-zinc-400 ml-1">Логин</label>
+            <input formControlName="login" type="text" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-[11px] font-medium text-zinc-400 ml-1">Пароль</label>
+            <input formControlName="password" type="password" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white">
+          </div>
+          </div>
+        </div>
+
+
+
+      <div class="grid grid-cols-2 gap-4">
+        <input formControlName="firstName" placeholder="Имя" class="bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white">
+        <input formControlName="lastName" placeholder="Фамилия" class="bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white">
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-medium text-zinc-400 ml-1">Метод входа</label>
+          <select formControlName="loginMethod" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white focus:outline-none focus:border-zinc-600">
+            @for (method of loginMethods; track method.value) {
+              <option [ngValue]="method.value">{{ method.label }} ID</option>
+            }
+          </select>
+        </div>
+
+      <div class="space-y-1.5">
+        <label class="text-[11px] font-medium text-zinc-400 ml-1">Прокси</label>
+        <select formControlName="proxyId" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white focus:outline-none focus:border-zinc-600">
+          <option [ngValue]="null">Без прокси</option>
+          @for (proxy of proxyStore.proxies(); track proxy.id) {
+            <option [value]="proxy.id">{{ proxy.ipAddress }}:{{ proxy.port }}</option>
+          }
+        </select>
+      </div>
+      </div>
+      <div class="space-y-1.5">
+        <label class="text-[11px] font-medium text-zinc-400 ml-1">Описание</label>
+        <textarea formControlName="description" rows="2" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white resize-none"></textarea>
+      </div>
+    </form>
+
+    <div class="p-4 bg-[#0d0d0d]/40 border-t border-zinc-800/50 flex justify-end gap-2">
+      <button (click)="closeModal.emit()" class="text-zinc-400 hover:text-white text-xs px-5 py-2.5">Отмена</button>
+      <button (click)="onSave()" class="bg-white hover:bg-zinc-200 text-black px-6 py-2.5 rounded-md text-xs font-bold transition-all">
+        {{ isEditMode() ? 'Сохранить' : 'Добавить аккаунт' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+{
+  "/api": {
+    "target": "https://localhost:5000",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/hubs": {
+    "target": "https://localhost:5000",
+    "secure": false,
+    "changeOrigin": true,
+    "ws": true
+  },
+  "/identity": {
+    "target": "https://localhost:5001",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/connect": {
+    "target": "https://localhost:5001",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/.well-known": {
+    "target": "https://localhost:5001",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

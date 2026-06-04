@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -23,13 +24,22 @@
   "private": true,
   "packageManager": "npm@11.6.2",
   "dependencies": {
+    "@angular/cdk": "^21.2.7",
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
     "@angular/core": "^21.0.0",
     "@angular/forms": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
     "@angular/router": "^21.0.0",
+    "@lucide/angular": "^1.8.0",
+    "@microsoft/signalr": "^10.0.0",
+    "@tailwindcss/postcss": "^4.2.2",
+    "angular-oauth2-oidc": "^20.0.2",
+    "jwt-decode": "^4.0.0",
+    "postcss": "^8.5.9",
+    "primeicons": "^7.0.0",
     "rxjs": "~7.8.0",
+    "tailwindcss": "^4.2.2",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

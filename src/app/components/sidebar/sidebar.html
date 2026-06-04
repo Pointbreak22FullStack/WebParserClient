@@ -1,0 +1,107 @@
+<aside class="flex flex-col w-64 h-screen bg-[#050505] text-[#71717a] border-r border-zinc-800/40">
+  <div class="p-5 flex items-center gap-3">
+    <div class="w-8 h-8 bg-white rounded-md flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+      <span class="text-black font-bold text-lg">!</span>
+    </div>
+    <h1 class="text-[#84cc16] font-bold text-lg tracking-tight font-mono">AutoPanel</h1>
+  </div>
+
+  <nav class="flex-1 px-3 mt-2 space-y-6 overflow-y-auto">
+    @for (section of sections(); track section.title) {
+      <div class="space-y-1">
+        <h2 class="px-3 text-[11px] font-medium text-zinc-600 uppercase tracking-widest mb-2">
+          {{ section.title }}
+        </h2>
+
+        @for (item of section.items; track item.label) {
+          <a [routerLink]="item.route"
+             routerLinkActive="text-white bg-zinc-900"
+             class="flex items-center gap-3 px-3 py-2 rounded-md text-[13px] transition-all duration-200 hover:text-zinc-200 hover:bg-zinc-900 group">
+            <i [class]="item.icon" class="text-base opacity-50 group-hover:opacity-100 transition-opacity"></i>
+            <span class="font-medium tracking-wide">{{ item.label }}</span>
+          </a>
+        }
+      </div>
+    }
+  </nav>
+
+  <div class="p-4 bg-[#050505] border-t border-zinc-900">
+    <div
+      cdkOverlayOrigin
+      #trigger="cdkOverlayOrigin"
+      (click)="toggleProfile()"
+      class="flex items-center gap-3 p-2 rounded-lg hover:bg-zinc-900 transition-all cursor-pointer group"
+    >
+      <div class="w-9 h-9 border border-zinc-800 rounded-lg flex items-center justify-center bg-zinc-950 overflow-hidden text-zinc-500 font-bold text-xs">
+        {{ user()?.name?.[0]?.toUpperCase() || '?' }}
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <p class="text-xs text-zinc-200 font-medium truncate">
+          {{ user()?.name }}
+        </p>
+        <p class="text-[10px] text-zinc-500 truncate">
+          {{ user()?.email }}
+        </p>
+      </div>
+      <i class="pi pi-sort-alt text-[10px] text-zinc-600 group-hover:text-zinc-400"></i>
+    </div>
+  </div>
+
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="isProfileOpen()"
+    [cdkConnectedOverlayPositions]="[
+    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -8 }
+  ]"
+    (overlayOutsideClick)="isProfileOpen.set(false)"
+  >
+    <div class="w-64 bg-[#0d0d0d] border border-zinc-800 rounded-xl shadow-2xl p-1 animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center gap-3 p-3 border-b border-zinc-800/50 mb-1">
+        <div class="w-8 h-8 rounded-md bg-zinc-800 flex items-center justify-center text-zinc-400 font-bold text-[10px]">
+          {{ user()?.name?.[0]?.toUpperCase() }}
+        </div>
+        <div class="overflow-hidden">
+          <p class="text-xs text-zinc-200 font-semibold truncate">
+            {{ user()?.name }}
+          </p>
+          <p class="text-[10px] text-zinc-500 truncate">
+            {{ user()?.email }}
+          </p>
+        </div>
+      </div>
+
+      <div class="space-y-0.5">
+        <button class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
+          <i class="pi pi-sparkles text-xs"></i>
+          <span>Upgrade to Pro</span>
+        </button>
+
+        <div class="h-[1px] bg-zinc-800 my-1 mx-2"></div>
+
+        <button class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
+          <i class="pi pi-check-circle text-xs"></i>
+          <span>Account</span>
+        </button>
+        <button class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
+          <i class="pi pi-credit-card text-xs"></i>
+          <span>Billing</span>
+        </button>
+        <button class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
+          <i class="pi pi-bell text-xs"></i>
+          <span>Notifications</span>
+        </button>
+
+        <div class="h-[1px] bg-zinc-800 my-1 mx-2"></div>
+
+        <div class="space-y-0.5">
+          <button (click)="logout()" class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
+            <i class="pi pi-sign-out text-xs"></i>
+            <span>Log out</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</aside>

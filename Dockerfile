@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . ./
-RUN npm run build --configuration production
+RUN npm run build:prod
 
 FROM nginx:alpine AS runtime
 COPY --from=build /app/dist/web-parser-client /usr/share/nginx/html

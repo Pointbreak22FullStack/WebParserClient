@@ -1,14 +1,15 @@
 import {Component, computed, inject, signal} from '@angular/core';
-import {NavigationEnd, NavigationStart, Router, RouterOutlet} from '@angular/router';
+import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {Sidebar} from './components/sidebar/sidebar';
 import {Header} from './components/header/header';
+import {ToastComponent} from './components/toast/toast.component';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {filter, map} from 'rxjs';
 import {AuthService} from './services/auth-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Sidebar, Header],
+  imports: [RouterOutlet, Sidebar, Header, ToastComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

@@ -26,7 +26,6 @@
               }
             ],
             "styles": [
-
               "src/styles.css"
             ]
           },
@@ -55,7 +54,26 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.development.ts"
                 }
-]
+              ]
+            },
+            "docker-dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "prod-local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod-local.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "optimization": true
             }
           },
           "defaultConfiguration": "production"
@@ -65,8 +83,9 @@
           "options": {
             "host": "0.0.0.0",
             "proxyConfig": "proxy.conf.json",
-            "allowedHosts": ["c469-217-19-214-254.ngrok-free.app"]
-
+            "allowedHosts": [
+              "c469-217-19-214-254.ngrok-free.app"
+            ]
           },
           "configurations": {
             "production": {

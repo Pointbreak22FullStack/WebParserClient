@@ -3,6 +3,7 @@ import { filter } from 'rxjs';
 
 import { AccountService } from '../services/account.service';
 import { HubService } from '../services/hub.service';
+import { ToastService } from '../services/toast.service';
 import { Account } from '../interfaces/account';
 import { AccountStatus } from '../interfaces/account-status';
 import { HubNotification } from '../interfaces/hub-notification';
@@ -10,7 +11,8 @@ import { HubNotification } from '../interfaces/hub-notification';
 @Injectable({ providedIn: 'root' })
 export class AccountStore {
   private accountService = inject(AccountService);
-  private hub = inject(HubService);
+  private hub   = inject(HubService);
+  private toast = inject(ToastService);
 
   private _accounts = signal<Account[]>([]);
   private _isLoading = signal<boolean>(false);
@@ -32,7 +34,7 @@ export class AccountStore {
         this._accounts.set(data);
         this._isLoading.set(false);
       },
-      error: () => this._isLoading.set(false)
+      error: () => { this._isLoading.set(false); this.toast.error('Не удалось загрузить аккаунты'); }
     });
   }
 

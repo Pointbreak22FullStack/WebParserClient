@@ -2,13 +2,15 @@ import { inject, Injectable, signal, computed } from '@angular/core';
 import { filter } from 'rxjs';
 import { TaskService } from '../services/task.service';
 import { HubService } from '../services/hub.service';
+import { ToastService } from '../services/toast.service';
 import { UserTaskDto } from '../interfaces/task';
 import { HubNotification } from '../interfaces/hub-notification';
 
 @Injectable({ providedIn: 'root' })
 export class TaskStore {
   private taskService = inject(TaskService);
-  private hub = inject(HubService);
+  private hub   = inject(HubService);
+  private toast = inject(ToastService);
 
   private _tasks = signal<UserTaskDto[]>([]);
   private _isLoading = signal(false);
@@ -27,7 +29,7 @@ export class TaskStore {
     this._isLoading.set(true);
     this.taskService.getAll().subscribe({
       next: data => { this._tasks.set(data); this._isLoading.set(false); },
-      error: () => this._isLoading.set(false),
+      error: () => { this._isLoading.set(false); this.toast.error('Не удалось загрузить задачи'); },
     });
   }
 

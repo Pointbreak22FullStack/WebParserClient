@@ -1,9 +1,11 @@
-import {Component, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
-import {ActivatedRoute, Router, RouterModule} from '@angular/router';
-import {CommonModule} from '@angular/common';
-import {AuthService} from '../../services/auth-service';
-import {FormGroup, FormsModule} from '@angular/forms';
-import {AuthorizationService} from '../../services/authorization-service';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../../services/auth-service';
+import { AuthorizationService } from '../../services/authorization-service';
+import { getHttpErrorMessage } from '../../core/utils/http-error.util';
 
 @Component({
   selector: 'app-login',
@@ -12,30 +14,27 @@ import {AuthorizationService} from '../../services/authorization-service';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login implements OnInit  {
-
-  private authService = inject(AuthService);
-  private authzService = inject(AuthorizationService); // ✅ добавить
-  private router=inject(Router);
-  private route = inject(ActivatedRoute); // ✅ добавить
+export class Login implements OnInit {
+  private authService  = inject(AuthService);
+  private authzService = inject(AuthorizationService);
+  private router       = inject(Router);
+  private route        = inject(ActivatedRoute);
   private returnUrl: string | null = null;
-  loginData = {
-    email: '',
-    password: ''
-  };
 
+  loginData    = { email: '', password: '' };
   errorMessage = signal<string | null>(null);
-  isLoading = signal(false);
+  isLoading    = signal(false);
   showPassword = signal(false);
-  ngOnInit() {
-    // ✅ Запоминаем returnUrl от Identity Server
+
+  ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
   }
-  protected togglePassword() {
+
+  protected togglePassword(): void {
     this.showPassword.update(v => !v);
   }
 
-  protected onLogin() {
+  protected onLogin(): void {
     if (!this.loginData.email || !this.loginData.password) {
       this.errorMessage.set('Пожалуйста, заполните все поля');
       return;
@@ -44,43 +43,30 @@ export class Login implements OnInit  {
     this.isLoading.set(true);
 
     if (this.returnUrl) {
-      // ✅ Пришли через OAuth2 flow — нужна кука для authorize endpoint
       this.authService.loginApi(this.loginData.email, this.loginData.password).subscribe({
-        next: () => {
-          // Кука установлена — возвращаем браузер на authorize endpoint
-          window.location.href = this.returnUrl!;
-        },
-        error: () => {
+        next: () => { window.location.href = this.returnUrl!; },
+        error: (err: HttpErrorResponse) => {
           this.isLoading.set(false);
-          this.errorMessage.set('Неверный логин или пароль');
-        }
+          this.errorMessage.set(this.resolveLoginError(err));
+        },
       });
     } else {
-      // ✅ Прямой вход — нужен JWT token сразу
       this.authService.loginWithCredentials(this.loginData.email, this.loginData.password).subscribe({
         next: () => {
           this.authzService.refreshState();
           this.router.navigate(['/']);
         },
-        error: () => {
+        error: (err: HttpErrorResponse) => {
           this.isLoading.set(false);
-          this.errorMessage.set('Неверный логин или пароль');
-        }
+          this.errorMessage.set(this.resolveLoginError(err));
+        },
       });
     }
   }
-    // this.authService.loginApi(this.loginData.email, this.loginData.password).subscribe({
-    //   next: () => {
-    //     // API поставило куку, теперь просим OAuthService начать поток
-    //     // Важно: redirectUri в конфиге должен быть именно http://localhost:4200/auth/callback
-    //     this.authService.loginOAuth();
-    //   },
-    //   error: (err) => {
-    //     this.isLoading.set(false);
-    //     this.errorMessage.set('Неверный логин или пароль');
-    //   }
-    // });
 
-
-
+  private resolveLoginError(err: HttpErrorResponse): string {
+    if (err.status === 0)   return 'Сервер недоступен. Проверьте подключение.';
+    if (err.status === 400 || err.status === 401) return 'Неверный логин или пароль';
+    return getHttpErrorMessage(err);
+  }
 }

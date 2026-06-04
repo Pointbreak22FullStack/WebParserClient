@@ -9,7 +9,8 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthService {
   private http = inject(HttpClient);
   private oauth = inject(OAuthService);
-  private manualAccessToken: string | null = null;
+  private manualAccessToken: string | null =
+    sessionStorage.getItem('access_token');
 // Только настройка (вызываем в App)
   configureOnly(): void {
     this.configureOAuth();
@@ -41,9 +42,10 @@ export class AuthService {
       strictDiscoveryDocumentValidation: false,
       clearHashAfterLogin: false,
 
-      loginUrl:      environment.production ? undefined : `${base}/identity/connect/authorize`,
-      tokenEndpoint: environment.production ? undefined : `${base}/identity/connect/token`,
-      logoutUrl:     environment.production ? undefined : `${base}/identity/connect/logout`,
+      loginUrl:              environment.production ? undefined : `${base}/identity/connect/authorize`,
+      tokenEndpoint:         environment.production ? undefined : `${base}/identity/connect/token`,
+      logoutUrl:             environment.production ? undefined : `${base}/identity/connect/logout`,
+      postLogoutRedirectUri: environment.production ? undefined : `${base}/login`,
 
 
     };
@@ -56,9 +58,16 @@ export class AuthService {
     this.oauth.initCodeFlow();
   }
 
-  logout() {
-    this.manualAccessToken = null;
+  logout(): void {
+    this.clearTokens();
     this.oauth.logOut();
+  }
+
+  clearTokens(): void {
+    this.manualAccessToken = null;
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('refresh_token');
+    sessionStorage.removeItem('id_token');
   }
   getAccessToken(): string {
     // Приоритет нашей переменной, если она есть
@@ -68,7 +77,23 @@ export class AuthService {
     return this.oauth.getIdentityClaims();
   }
   isAuthenticated(): boolean {
-    return !!this.manualAccessToken || this.oauth.hasValidAccessToken();
+    if (this.manualAccessToken) {
+      if (this.isTokenExpired(this.manualAccessToken)) {
+        this.clearTokens();
+        return false;
+      }
+      return true;
+    }
+    return this.oauth.hasValidAccessToken();
+  }
+
+  private isTokenExpired(token: string): boolean {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp ? payload.exp * 1000 < Date.now() : false;
+    } catch {
+      return true;
+    }
   }
 
 

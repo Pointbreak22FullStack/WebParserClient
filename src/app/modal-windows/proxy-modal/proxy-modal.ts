@@ -37,7 +37,10 @@ export class ProxyModal implements OnInit {
         ? (((ProxyType as Record<string, unknown>)[rawType as string] as ProxyType) ?? ProxyType.Http)
         : n as ProxyType;
 
-      this.proxyForm.patchValue({ ...data, type });
+      // Сервер не отдаёт пароль: при редактировании пустое поле = оставить текущий
+      this.proxyForm.patchValue({ ...data, password: '', type });
+      this.proxyForm.controls.password.clearValidators();
+      this.proxyForm.controls.password.updateValueAndValidity();
     }
   }
 
@@ -47,7 +50,7 @@ export class ProxyModal implements OnInit {
         ipAddress: this.proxyForm.value.ipAddress!,
         port: this.proxyForm.value.port!,
         login: this.proxyForm.value.login!,
-        password: this.proxyForm.value.password!,
+        password: this.proxyForm.value.password ?? '',
         type: Number(this.proxyForm.value.type) as ProxyType,
       };
       this.store.saveProxy(payload, this.proxyData()?.id);

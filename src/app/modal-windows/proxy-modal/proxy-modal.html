@@ -48,7 +48,7 @@
           <input
             formControlName="password"
             type="password"
-            placeholder="••••••••"
+            [placeholder]="isEditMode() ? 'Оставьте пустым, чтобы не менять' : '••••••••'"
             autocomplete="new-password"
             class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-zinc-700 focus:outline-none focus:border-zinc-600 transition-colors"
           >

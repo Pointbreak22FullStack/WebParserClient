@@ -65,7 +65,8 @@ export class AccountModal implements OnInit {
       this.accountForm.patchValue({
         loginMethod,
         login: data.login,
-        password: data.password,
+        // Сервер не отдаёт пароль: пустое поле при сохранении = оставить текущий
+        password: '',
         description: data.description,
         countryCode: code,
         phoneBody: phone,

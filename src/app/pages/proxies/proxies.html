@@ -1,60 +1,58 @@
-<div class="p-8 space-y-6 animate-in fade-in duration-500">
+<div class="page">
 
-  <div class="flex justify-between items-start mb-6">
+  <div class="page-header">
     <div>
-      <h1 class="text-2xl font-bold text-white tracking-tight">Прокси</h1>
-      <p class="text-zinc-500 text-xs mt-1">Пул прокси-серверов</p>
+      <span class="page-eyebrow"><i class="pi pi-globe text-[10px]"></i> Система</span>
+      <h1 class="page-title mt-1.5">Прокси</h1>
+      <p class="page-subtitle">Пул прокси-серверов</p>
     </div>
     <div class="flex items-center gap-2">
-      <button class="bg-[#111111] hover:bg-zinc-800 text-white border border-zinc-700 px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 shadow-sm">
-        <i class="pi pi-sync text-[10px]"></i> Тест всех
+      <button class="btn btn-secondary">
+        <i class="pi pi-sync"></i> Тест всех
       </button>
-      <button (click)="openAddModal()" class="bg-white hover:bg-zinc-200 text-black px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 shadow-sm">
-        <i class="pi pi-plus text-[10px]"></i> Добавить прокси
+      <button (click)="openAddModal()" class="btn btn-primary">
+        <i class="pi pi-plus"></i> Добавить прокси
       </button>
     </div>
   </div>
 
-  <div class="flex flex-wrap gap-2 mb-6">
+  <div class="flex flex-wrap gap-1.5">
     @for (tab of tabs; track tab.label) {
       <button (click)="setFilter(tab)"
-              class="px-3 py-1.5 rounded-full border text-xs transition-colors"
-              [class]="isActiveTab(tab)
-                ? 'border-white text-white bg-white/10'
-                : 'border-zinc-800 text-zinc-400 hover:border-zinc-600'">
+              class="chip" [class.active]="isActiveTab(tab)">
         {{ tab.label }}
       </button>
     }
   </div>
 
-  <section class="bg-[#111111] border border-zinc-800/80 rounded-xl overflow-hidden shadow-2xl">
+  <section class="card table-card">
     <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse whitespace-nowrap">
+      <table class="crm-table whitespace-nowrap">
 
-        <thead class="bg-[#0d0d0d] border-b border-zinc-800/80 text-zinc-500">
+        <thead>
         <tr>
-          <th class="px-6 py-4 text-xs font-medium">#</th>
-          <th class="px-6 py-4 text-xs font-medium">
+          <th class="">#</th>
+          <th class="">
             <button (click)="toggleSort()"
-                    class="inline-flex items-center gap-0.5 text-zinc-500 hover:text-white transition-colors cursor-pointer">
+                    class="inline-flex items-center gap-0.5 uppercase tracking-[0.08em] hover:text-foreground transition-colors">
               Адрес прокси
               <app-sort-icon [direction]="sortDir()" />
             </button>
           </th>
-          <th class="px-6 py-4 text-xs font-medium">Тип</th>
-          <th class="px-6 py-4 text-xs font-medium">Порт</th>
-          <th class="px-6 py-4 text-xs font-medium">Логин</th>
-          <th class="px-6 py-4 text-xs font-medium">Пароль</th>
-          <th class="px-6 py-4 text-xs font-medium">login:password ip:port (HTTP)</th>
-          <th class="px-6 py-4 text-xs font-medium">Аккаунты</th>
-          <th class="px-6 py-4 text-xs font-medium text-right"></th>
+          <th class="">Тип</th>
+          <th class="">Порт</th>
+          <th class="">Логин</th>
+          <th class="">Пароль</th>
+          <th class="">login:password ip:port (HTTP)</th>
+          <th class="">Аккаунты</th>
+          <th class="text-right"></th>
         </tr>
         </thead>
 
-        <tbody class="divide-y divide-zinc-800/40">
+        <tbody>
           @for (proxy of filteredProxies(); track proxy.id; let idx = $index) {
             <tr class="hover:bg-zinc-800/20 transition-colors group">
-              <td class="px-6 py-4">
+              <td class="">
                 <span class="inline-flex items-center gap-1.5 text-xs text-zinc-500">
                   <span class="w-1.5 h-1.5 rounded-full shrink-0"
                         [style.background-color]="store.getStatusDot(proxy)"></span>
@@ -62,30 +60,30 @@
                 </span>
               </td>
 
-              <td class="px-6 py-4">
+              <td class="">
                 <span class="text-xs text-zinc-300 font-medium">{{ proxy.ipAddress }}</span>
               </td>
 
-              <td class="px-6 py-4">
+              <td class="">
                 <span class="text-xs text-zinc-400">{{ store.getProxyTypeLabel(proxy.type) }}</span>
               </td>
 
-              <td class="px-6 py-4">
+              <td class="">
                 <span class="text-xs text-zinc-300 font-mono">{{ proxy.port }}</span>
               </td>
 
-              <td class="px-6 py-4 text-xs text-zinc-400">{{ proxy.login }}</td>
+              <td class="text-xs text-zinc-400">{{ proxy.login }}</td>
 
-              <td class="px-6 py-4 text-xs text-zinc-400">{{ proxy.password || '—' }}</td>
+              <td class="text-xs text-zinc-400">{{ proxy.password || '—' }}</td>
 
-              <td class="px-6 py-4">
+              <td class="">
                 <div class="flex items-center gap-2 text-xs text-zinc-500 font-mono">
                   <span>{{ proxy.login }}:{{ proxy.password }}@{{ proxy.ipAddress }}:{{ proxy.port }}</span>
                   <i class="pi pi-copy cursor-pointer hover:text-white transition-colors"></i>
                 </div>
               </td>
 
-              <td class="px-6 py-4">
+              <td class="">
                 <div class="flex items-center gap-2">
                   <span class="text-xs text-zinc-400 w-4">{{ proxy.accountsCount || 0 }}</span>
                   <div class="w-16 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
@@ -95,19 +93,27 @@
                 </div>
               </td>
 
-              <td class="px-6 py-4 text-right">
+              <td class="text-right">
 
 
-                <div class="flex justify-end gap-3 text-zinc-500">
-                  <button (click)="openEditModal(proxy)" class="text-zinc-500 hover:text-white flex items-center">
+                <div class="flex justify-end gap-1">
+                  <button (click)="openEditModal(proxy)" class="icon-action" title="Изменить">
                     <span class="icon-btn icon-retry"></span>
                   </button>
-                  <button (click)="deleteProxy(proxy.id)" class="text-zinc-500 hover:text-red-500 flex items-center">
+                  <button (click)="deleteProxy(proxy.id)" class="icon-action danger" title="Удалить">
                     <span class="icon-btn icon-trash"></span>
                   </button>
                 </div>
               </td>
             </tr>
+          } @empty {
+            <tr><td colspan="9">
+              <div class="empty-state">
+                <div class="empty-icon"><i class="pi pi-globe"></i></div>
+                <p class="empty-title">Прокси нет</p>
+                <p class="empty-text">Добавьте прокси-серверы для работы аккаунтов.</p>
+              </div>
+            </td></tr>
           }
         </tbody>
 

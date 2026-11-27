@@ -1,50 +1,60 @@
-<aside class="flex flex-col w-64 h-screen bg-[#050505] text-[#71717a] border-r border-zinc-800/40">
-  <div class="p-5 flex items-center gap-3">
-    <div class="w-8 h-8 bg-white rounded-md flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-      <span class="text-black font-bold text-lg">!</span>
+<aside class="sidebar relative flex flex-col w-[248px] shrink-0 h-screen border-r border-border bg-surface/80 backdrop-blur-xl">
+  <div class="pointer-events-none absolute -top-24 -left-16 w-56 h-56 glow-orb opacity-60"></div>
+
+  <!-- Логотип -->
+  <div class="relative px-5 pt-5 pb-4 flex items-center gap-3">
+    <div class="logo-mark">
+      <span>W</span>
     </div>
-    <h1 class="text-[#84cc16] font-bold text-lg tracking-tight font-mono">AutoPanel</h1>
+    <div class="leading-tight">
+      <div class="font-display text-[15px] font-bold tracking-tight text-foreground">Web<span class="text-gradient">Parser</span></div>
+      <div class="text-[10.5px] text-faint-foreground tracking-wide">YouTube · TikTok · Instagram</div>
+    </div>
   </div>
 
-  <nav class="flex-1 px-3 mt-2 space-y-6 overflow-y-auto">
+  <nav class="relative flex-1 px-3 pt-2 pb-4 space-y-5 overflow-y-auto custom-scrollbar">
     @for (section of sections(); track section.title) {
-      <div class="space-y-1">
-        <h2 class="px-3 text-[11px] font-medium text-zinc-600 uppercase tracking-widest mb-2">
+      <div>
+        <h2 class="px-3 mb-1.5 text-[10px] font-semibold text-faint-foreground uppercase tracking-[0.14em]">
           {{ section.title }}
         </h2>
 
-        @for (item of section.items; track item.label) {
-          <a [routerLink]="item.route"
-             routerLinkActive="text-white bg-zinc-900"
-             class="flex items-center gap-3 px-3 py-2 rounded-md text-[13px] transition-all duration-200 hover:text-zinc-200 hover:bg-zinc-900 group">
-            <i [class]="item.icon" class="text-base opacity-50 group-hover:opacity-100 transition-opacity"></i>
-            <span class="font-medium tracking-wide">{{ item.label }}</span>
-          </a>
-        }
+        <div class="space-y-0.5">
+          @for (item of section.items; track item.label) {
+            <a [routerLink]="item.route"
+               routerLinkActive="nav-active"
+               [routerLinkActiveOptions]="{ exact: item.route === '' }"
+               class="nav-item group">
+              <i [class]="item.icon" class="nav-icon"></i>
+              <span class="flex-1 truncate">{{ item.label }}</span>
+              @if (item.badge) {
+                <span class="nav-badge">{{ item.badge > 99 ? '99+' : item.badge }}</span>
+              }
+            </a>
+          }
+        </div>
       </div>
     }
   </nav>
 
-  <div class="p-4 bg-[#050505] border-t border-zinc-900">
+  <!-- Профиль -->
+  <div class="relative p-3 border-t border-border">
     <div
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
       (click)="toggleProfile()"
-      class="flex items-center gap-3 p-2 rounded-lg hover:bg-zinc-900 transition-all cursor-pointer group"
+      class="flex items-center gap-3 p-2 rounded-xl hover:bg-surface-hover transition-colors cursor-pointer group"
     >
-      <div class="w-9 h-9 border border-zinc-800 rounded-lg flex items-center justify-center bg-zinc-950 overflow-hidden text-zinc-500 font-bold text-xs">
+      <div class="avatar relative">
         {{ user()?.name?.[0]?.toUpperCase() || '?' }}
+        <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-accent-500 ring-2 ring-surface"></span>
       </div>
 
       <div class="flex-1 min-w-0">
-        <p class="text-xs text-zinc-200 font-medium truncate">
-          {{ user()?.name }}
-        </p>
-        <p class="text-[10px] text-zinc-500 truncate">
-          {{ user()?.email }}
-        </p>
+        <p class="text-[12.5px] text-foreground font-medium truncate">{{ user()?.name }}</p>
+        <p class="text-[10.5px] text-faint-foreground truncate">{{ user()?.email }}</p>
       </div>
-      <i class="pi pi-sort-alt text-[10px] text-zinc-600 group-hover:text-zinc-400"></i>
+      <i class="pi pi-angle-up text-[11px] text-faint-foreground group-hover:text-muted-foreground transition-colors"></i>
     </div>
   </div>
 
@@ -57,50 +67,26 @@
   ]"
     (overlayOutsideClick)="isProfileOpen.set(false)"
   >
-    <div class="w-64 bg-[#0d0d0d] border border-zinc-800 rounded-xl shadow-2xl p-1 animate-in fade-in zoom-in duration-200">
-      <div class="flex items-center gap-3 p-3 border-b border-zinc-800/50 mb-1">
-        <div class="w-8 h-8 rounded-md bg-zinc-800 flex items-center justify-center text-zinc-400 font-bold text-[10px]">
-          {{ user()?.name?.[0]?.toUpperCase() }}
-        </div>
+    <div class="profile-menu">
+      <div class="flex items-center gap-3 p-3 border-b border-border mb-1">
+        <div class="avatar">{{ user()?.name?.[0]?.toUpperCase() }}</div>
         <div class="overflow-hidden">
-          <p class="text-xs text-zinc-200 font-semibold truncate">
-            {{ user()?.name }}
-          </p>
-          <p class="text-[10px] text-zinc-500 truncate">
-            {{ user()?.email }}
-          </p>
+          <p class="text-[12.5px] text-foreground font-semibold truncate">{{ user()?.name }}</p>
+          <p class="text-[10.5px] text-faint-foreground truncate">{{ user()?.email }}</p>
         </div>
       </div>
 
-      <div class="space-y-0.5">
-        <button class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
-          <i class="pi pi-sparkles text-xs"></i>
-          <span>Upgrade to Pro</span>
+      <div class="space-y-0.5 p-1">
+        <a routerLink="/settings" (click)="isProfileOpen.set(false)" class="menu-item">
+          <i class="pi pi-cog"></i><span>Настройки</span>
+        </a>
+        <a routerLink="/logs" (click)="isProfileOpen.set(false)" class="menu-item">
+          <i class="pi pi-bell"></i><span>Журнал</span>
+        </a>
+        <div class="h-px bg-border my-1 mx-2"></div>
+        <button (click)="logout()" class="menu-item w-full hover:!text-destructive">
+          <i class="pi pi-sign-out"></i><span>Выйти</span>
         </button>
-
-        <div class="h-[1px] bg-zinc-800 my-1 mx-2"></div>
-
-        <button class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
-          <i class="pi pi-check-circle text-xs"></i>
-          <span>Account</span>
-        </button>
-        <button class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
-          <i class="pi pi-credit-card text-xs"></i>
-          <span>Billing</span>
-        </button>
-        <button class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
-          <i class="pi pi-bell text-xs"></i>
-          <span>Notifications</span>
-        </button>
-
-        <div class="h-[1px] bg-zinc-800 my-1 mx-2"></div>
-
-        <div class="space-y-0.5">
-          <button (click)="logout()" class="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-md transition-colors">
-            <i class="pi pi-sign-out text-xs"></i>
-            <span>Log out</span>
-          </button>
-        </div>
       </div>
     </div>
   </ng-template>

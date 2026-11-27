@@ -68,7 +68,7 @@ export class Sidebar {
     {
       title: 'Обзор',
       items: [
-        { label: 'Dashboard', icon: 'pi pi-objects-column', route: '' }
+        { label: 'Дашборд', icon: 'pi pi-objects-column', route: '' }
       ]
     },
     {
@@ -92,7 +92,7 @@ export class Sidebar {
         { label: 'Аккаунты', icon: 'pi pi-users', route: '/accounts' },
         { label: 'Прокси', icon: 'pi pi-globe', route: '/proxies' },
         { label: 'Логи', icon: 'pi pi-file', route: '/logs' },
-        { label: 'Настройки', icon: 'pi pi-wrench', route: '/settings' }
+        { label: 'Настройки', icon: 'pi pi-cog', route: '/settings' }
       ]
     }
   ]);

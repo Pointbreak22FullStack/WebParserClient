@@ -1,5 +1,5 @@
 export interface CreateTaskRequest {
-  type: number; // Comment = 1, Like = 2, Dislike = 3, Report = 4
+  type: number; // Comment = 1, Like = 2
   targetUrl: string;
   commentText?: string;
   maybeTargetUrl?: string;

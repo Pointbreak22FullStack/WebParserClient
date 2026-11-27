@@ -1,10 +1,11 @@
 <div class="tasks-page">
 
   <!-- ── Header ─────────────────────────────────────────────── -->
-  <div class="flex justify-between items-start shrink-0">
+  <div class="page-header shrink-0">
     <div>
-      <h1 class="text-xl font-semibold text-white">Задачи</h1>
-      <p class="text-zinc-500 text-sm mt-0.5">Все задачи в очереди</p>
+      <span class="page-eyebrow"><i class="pi pi-briefcase text-[10px]"></i> CRM</span>
+      <h1 class="page-title mt-1.5">Задачи</h1>
+      <p class="page-subtitle">Все задачи в очереди</p>
     </div>
     <div class="flex gap-2">
       <button class="btn-outline flex items-center gap-1.5">
@@ -19,12 +20,6 @@
         </svg>
         Bulk-создание
       </button>
-      <a routerLink="/new-task" class="btn-primary flex items-center gap-1.5">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-3.5 h-3.5">
-          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-        </svg>
-        Новая задача
-      </a>
     </div>
   </div>
 
@@ -64,7 +59,7 @@
       @for (s of statusFilters; track s) {
         <button (click)="statusFilter.set(s)"
                 class="text-[11px] font-medium transition-colors"
-                [class.text-\[#9eff00\]]="statusFilter() === s"
+                [class.text-accent-400]="statusFilter() === s"
                 [class.text-zinc-500]="statusFilter() !== s"
                 [class.hover:text-zinc-300]="statusFilter() !== s">
           {{ s }}
@@ -110,7 +105,7 @@
   <div class="table-wrap flex-1 min-h-0">
     <div class="overflow-y-auto h-full custom-scrollbar">
       <table class="w-full text-left text-[11px] border-separate border-spacing-0">
-        <thead class="sticky top-0 z-10 bg-[#0d0d0d]">
+        <thead class="sticky top-0 z-10 bg-surface">
           <tr class="text-zinc-600 uppercase tracking-wider">
             <th class="th-cell w-10 text-center">
               <span class="checkbox"
@@ -202,7 +197,7 @@
                 } @else {
                   <div class="text-zinc-400">{{ task.accounts.length }} аккаунтов</div>
                   <div class="w-14 h-0.5 bg-zinc-800 rounded-full overflow-hidden mt-1.5">
-                    <div class="bg-[#9eff00] h-full" [style.width.%]="task.progress"></div>
+                    <div class="bg-[#84cc16] h-full" [style.width.%]="task.progress"></div>
                   </div>
                 }
               </td>

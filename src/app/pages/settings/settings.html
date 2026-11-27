@@ -1,19 +1,20 @@
-<div class="p-8 space-y-6 animate-in fade-in duration-500 max-w-7xl">
+<div class="page max-w-7xl">
 
-  <div>
-    <h1 class="text-2xl font-bold text-white tracking-tight">Настройки</h1>
-    <p class="text-zinc-500 text-xs mt-1">Конфигурация системы</p>
-  </div>
+  <div class="page-header"><div>
+    <span class="page-eyebrow"><i class="pi pi-cog text-[10px]"></i> Система</span>
+    <h1 class="page-title mt-1.5">Настройки</h1>
+    <p class="page-subtitle">Конфигурация системы</p>
+  </div></div>
 
   @if (store.state(); as data) {
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
 
       <div class="space-y-6">
 
-        <div class="bg-[#111111] border border-zinc-800/80 rounded-xl p-6 space-y-6">
+        <div class="card p-6 space-y-6">
           <div>
-            <h3 class="text-sm font-bold text-white">Поведение</h3>
-            <p class="text-[10px] text-zinc-500 mt-0.5">Параметры работы ботов</p>
+            <h3 class="card-title">Поведение</h3>
+            <p class="card-subtitle">Параметры работы ботов</p>
           </div>
 
           <div class="space-y-5">
@@ -23,7 +24,7 @@
                 <p class="text-[10px] text-zinc-600">Пауза между действиями бота</p>
               </div>
               <input type="number" [ngModel]="data.delayBetweenActionsMs" (ngModelChange)="onInputChange('delayBetweenActionsMs', $event)"
-                     class="w-24 bg-[#0d0d0d] border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-white focus:outline-none focus:border-zinc-600 text-right">
+                     class="field field-sm w-24 text-right">
             </div>
 
             <div class="flex items-center justify-between">
@@ -32,7 +33,7 @@
                 <p class="text-[10px] text-zinc-600">Одновременных воркеров</p>
               </div>
               <input type="number" [ngModel]="data.maxParallelTasks" (ngModelChange)="onInputChange('maxParallelTasks', $event)"
-                     class="w-24 bg-[#0d0d0d] border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-white focus:outline-none focus:border-zinc-600 text-right">
+                     class="field field-sm w-24 text-right">
             </div>
 
             <div class="flex items-center justify-between pt-1">
@@ -41,7 +42,7 @@
                 <p class="text-[10px] text-zinc-600">Автоматически повторять упавшие</p>
               </div>
               <button (click)="toggle('retryOnError')"
-                      [ngClass]="data.retryOnError ? 'bg-white' : 'bg-zinc-700'"
+                      [ngClass]="data.retryOnError ? 'bg-accent-500' : 'bg-zinc-700'"
                       class="w-10 h-5 rounded-full relative transition-colors focus:outline-none">
                 <div [ngClass]="data.retryOnError ? 'translate-x-5 bg-black' : 'translate-x-0.5 bg-zinc-400'"
                      class="absolute top-0.5 w-4 h-4 rounded-full shadow transition-transform duration-200"></div>
@@ -54,7 +55,7 @@
                 <p class="text-[10px] text-zinc-600">Браузер без UI</p>
               </div>
               <button (click)="toggle('headlessMode')"
-                      [ngClass]="data.headlessMode ? 'bg-white' : 'bg-zinc-700'"
+                      [ngClass]="data.headlessMode ? 'bg-accent-500' : 'bg-zinc-700'"
                       class="w-10 h-5 rounded-full relative transition-colors focus:outline-none">
                 <div [ngClass]="data.headlessMode ? 'translate-x-5 bg-black' : 'translate-x-0.5 bg-zinc-400'"
                      class="absolute top-0.5 w-4 h-4 rounded-full shadow transition-transform duration-200"></div>
@@ -63,14 +64,14 @@
           </div>
         </div>
 
-        <div class="bg-[#111111] border border-zinc-800/80 rounded-xl p-6 space-y-6">
-          <h3 class="text-sm font-bold text-white">Антидетект</h3>
+        <div class="card p-6 space-y-6">
+          <h3 class="card-title">Антидетект</h3>
           <div class="space-y-5">
             <div class="flex items-center justify-between">
               <label class="text-xs text-zinc-300">Движок фингерпринта</label>
               <div class="relative w-40">
                 <select [ngModel]="data.fingerprintEngine" (ngModelChange)="onInputChange('fingerprintEngine', $event)"
-                        class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-white focus:outline-none appearance-none cursor-pointer text-right pr-8">
+                        class="field field-sm text-right pr-8">
                   <option value="Собственный">Собственный</option>
                   <option value="Стандартный">Стандартный</option>
                 </select>
@@ -83,7 +84,7 @@
             <div class="flex items-center justify-between pt-1">
               <label class="block text-xs text-zinc-300">Ротация User-Agent</label>
               <button (click)="toggle('rotateUserAgent')"
-                      [ngClass]="data.rotateUserAgent ? 'bg-white' : 'bg-zinc-700'"
+                      [ngClass]="data.rotateUserAgent ? 'bg-accent-500' : 'bg-zinc-700'"
                       class="w-10 h-5 rounded-full relative transition-colors focus:outline-none">
                 <div [ngClass]="data.rotateUserAgent ? 'translate-x-5 bg-black' : 'translate-x-0.5 bg-zinc-400'"
                      class="absolute top-0.5 w-4 h-4 rounded-full shadow transition-transform duration-200"></div>
@@ -93,7 +94,7 @@
             <div class="flex items-center justify-between pt-1">
               <label class="block text-xs text-zinc-300">Симуляция поведения человека</label>
               <button (click)="toggle('simulateHumanBehavior')"
-                      [ngClass]="data.simulateHumanBehavior ? 'bg-white' : 'bg-zinc-700'"
+                      [ngClass]="data.simulateHumanBehavior ? 'bg-accent-500' : 'bg-zinc-700'"
                       class="w-10 h-5 rounded-full relative transition-colors focus:outline-none">
                 <div [ngClass]="data.simulateHumanBehavior ? 'translate-x-5 bg-black' : 'translate-x-0.5 bg-zinc-400'"
                      class="absolute top-0.5 w-4 h-4 rounded-full shadow transition-transform duration-200"></div>
@@ -105,14 +106,14 @@
 
       <div class="space-y-6">
 
-        <div class="bg-[#111111] border border-zinc-800/80 rounded-xl p-6 space-y-6">
-          <h3 class="text-sm font-bold text-white">Движок комментариев</h3>
+        <div class="card p-6 space-y-6">
+          <h3 class="card-title">Движок комментариев</h3>
           <div class="space-y-5">
             <div class="flex items-center justify-between">
               <label class="text-xs text-zinc-300">Режим генерации</label>
               <div class="relative w-40">
                 <select [ngModel]="data.generationMode" (ngModelChange)="onInputChange('generationMode', $event)"
-                        class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-white focus:outline-none appearance-none cursor-pointer text-right pr-8">
+                        class="field field-sm text-right pr-8">
                   <option value="LLM">LLM</option>
                   <option value="Шаблонный">Шаблонный</option>
                 </select>
@@ -125,13 +126,13 @@
             <div class="flex items-center justify-between pt-1">
               <label class="block text-xs text-zinc-300">Интервал проверки (мин)</label>
               <input type="number" [ngModel]="data.checkIntervalMinutes" (ngModelChange)="onInputChange('checkIntervalMinutes', $event)"
-                     class="w-24 bg-[#0d0d0d] border border-zinc-800 rounded-md px-3 py-1.5 text-xs text-white focus:outline-none focus:border-zinc-600 text-right">
+                     class="field field-sm w-24 text-right">
             </div>
 
             <div class="flex items-center justify-between pt-1">
               <label class="block text-xs text-zinc-300">Авто-накрутка лайков</label>
               <button (click)="toggle('autoLikeEnabled')"
-                      [ngClass]="data.autoLikeEnabled ? 'bg-white' : 'bg-zinc-700'"
+                      [ngClass]="data.autoLikeEnabled ? 'bg-accent-500' : 'bg-zinc-700'"
                       class="w-10 h-5 rounded-full relative transition-colors focus:outline-none">
                 <div [ngClass]="data.autoLikeEnabled ? 'translate-x-5 bg-black' : 'translate-x-0.5 bg-zinc-400'"
                      class="absolute top-0.5 w-4 h-4 rounded-full shadow transition-transform duration-200"></div>
@@ -141,7 +142,7 @@
             <div class="flex items-center justify-between pt-1">
               <label class="block text-xs text-zinc-300">Репортить конкурентов</label>
               <button (click)="toggle('reportCompetitors')"
-                      [ngClass]="data.reportCompetitors ? 'bg-white' : 'bg-zinc-700'"
+                      [ngClass]="data.reportCompetitors ? 'bg-accent-500' : 'bg-zinc-700'"
                       class="w-10 h-5 rounded-full relative transition-colors focus:outline-none">
                 <div [ngClass]="data.reportCompetitors ? 'translate-x-5 bg-black' : 'translate-x-0.5 bg-zinc-400'"
                      class="absolute top-0.5 w-4 h-4 rounded-full shadow transition-transform duration-200"></div>
@@ -150,20 +151,20 @@
           </div>
         </div>
 
-        <div class="bg-[#111111] border border-zinc-800/80 rounded-xl p-6 space-y-6">
-          <h3 class="text-sm font-bold text-white">Telegram-уведомления</h3>
+        <div class="card p-6 space-y-6">
+          <h3 class="card-title">Telegram-уведомления</h3>
           <div class="space-y-4">
             <div class="space-y-2">
-              <label class="text-[11px] text-zinc-400">Token бота</label>
+              <label class="field-label">Token бота</label>
               <input type="text" [ngModel]="data.telegramBotToken" (ngModelChange)="onInputChange('telegramBotToken', $event)"
                      placeholder="123456:ABC-DEF1234..."
-                     class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white placeholder:text-zinc-700 focus:outline-none focus:border-zinc-600 transition-colors">
+                     class="field">
             </div>
             <div class="space-y-2">
-              <label class="text-[11px] text-zinc-400">Chat ID</label>
+              <label class="field-label">Chat ID</label>
               <input type="text" [ngModel]="data.telegramChatId" (ngModelChange)="onInputChange('telegramChatId', $event)"
                      placeholder="@channel или 123456789"
-                     class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white placeholder:text-zinc-700 focus:outline-none focus:border-zinc-600 transition-colors">
+                     class="field">
             </div>
           </div>
         </div>
@@ -172,18 +173,18 @@
     </div>
   } @else {
     <div class="flex items-center justify-center h-64">
-      <div class="text-zinc-500 animate-pulse text-sm font-medium">Загрузка конфигурации...</div>
+      <div class="flex items-center gap-2 text-muted-foreground text-sm"><span class="spinner"></span> Загрузка конфигурации…</div>
     </div>
   }
 
   <div class="flex gap-3 pt-2">
     <button (click)="save()"
             [disabled]="store.isLoading()"
-            class="bg-white hover:bg-zinc-200 disabled:opacity-50 text-black px-6 py-2.5 rounded-lg text-xs font-bold transition-all shadow-sm">
+            class="btn btn-primary">
       {{ store.isLoading() ? 'Сохранение...' : 'Сохранить изменения' }}
     </button>
     <button (click)="store.reset()"
-            class="bg-transparent hover:bg-zinc-800/50 text-zinc-400 border border-zinc-800 px-6 py-2.5 rounded-lg text-xs font-bold transition-all">
+            class="btn btn-secondary">
       Сбросить изменения
     </button>
   </div>

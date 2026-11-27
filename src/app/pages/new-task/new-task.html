@@ -37,12 +37,12 @@
 
 
           <div class="space-y-1.5">
-            <label class="text-base font-medium text-gray9">URL статьи на otvet.mail.ru</label>
+            <label class="text-base font-medium text-gray9">Ссылка на видео (YouTube, TikTok, Instagram)</label>
             <input
               type="text"
               name="targetUrl"
               [(ngModel)]="urlValue"
-              placeholder="https://otvet.mail.ru/question/..."
+              placeholder="https://www.youtube.com/watch?v=..."
               class="w-full text-2xl bg-background border border-outline rounded-lg px-4 py-3  text-foreground placeholder:text-gray10 focus:outline-none focus:ring-1 focus:ring-zinc-700 focus:bg-zinc-900/80 transition-all"   >
           </div>
           @if (selectedTaskType() === 'Комментарий') {
@@ -157,7 +157,7 @@
                     <span>Опубликован</span>
                   </div>
                 </div>
-                <div class="text-[13px] text-blue-400 hover:underline cursor-pointer font-mono">otvet.mail.ru/q/12340</div>
+                <div class="text-[13px] text-blue-400 hover:underline cursor-pointer font-mono">youtube.com/watch?v=…</div>
                 <div class="text-right">
 
                   <div class="text-[12px] text-gray9 mt-1">14:30</div>

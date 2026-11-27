@@ -1,19 +1,19 @@
-<div class="flex h-screen bg-[#0a0a0a] overflow-hidden font-sans">
+<div class="app-shell flex h-screen overflow-hidden bg-background text-foreground font-sans">
   @if (!isAuthPage()) {
     <app-sidebar></app-sidebar>
   }
-  <div class="flex-1 flex flex-col overflow-hidden">
-
+  <div class="relative flex-1 flex flex-col overflow-hidden">
     @if (!isAuthPage()) {
+      <div class="pointer-events-none absolute inset-x-0 top-0 h-72 bg-grid opacity-70"></div>
       <app-header></app-header>
     }
 
-    <main class="flex-1 overflow-y-auto px-8 py-4 custom-scrollbar">
-      <router-outlet></router-outlet>
+    <main class="relative flex-1 overflow-y-auto custom-scrollbar" [class.px-8]="!isAuthPage()" [class.py-6]="!isAuthPage()">
+      <div [class.max-w-[1480px]]="!isAuthPage()" [class.mx-auto]="!isAuthPage()" class="h-full">
+        <router-outlet></router-outlet>
+      </div>
     </main>
-
   </div>
 </div>
 
 <app-toast />
-

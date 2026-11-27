@@ -68,7 +68,7 @@ export class Sidebar {
     {
       title: 'Обзор',
       items: [
-        { label: 'Dashboard', icon: 'pi pi-objects-column', route: '' }
+        { label: 'Дашборд', icon: 'pi pi-objects-column', route: '' }
       ]
     },
     {
@@ -82,7 +82,6 @@ export class Sidebar {
       title: 'Инструменты',
       items: [
         { label: 'Комментарии', icon: 'pi pi-comments', route: '/comments' },
-        { label: 'Лайки / Дизлайки', icon: 'pi pi-thumbs-up', route: '/like-booster' },
         { label: 'Мониторинг позиций', icon: 'pi pi-compass', route: '/monitoring' },
         { label: 'Генерация AI', icon: 'pi pi-sparkles', route: '/gen-ai' }
       ]
@@ -93,7 +92,7 @@ export class Sidebar {
         { label: 'Аккаунты', icon: 'pi pi-users', route: '/accounts' },
         { label: 'Прокси', icon: 'pi pi-globe', route: '/proxies' },
         { label: 'Логи', icon: 'pi pi-file', route: '/logs' },
-        { label: 'Настройки', icon: 'pi pi-wrench', route: '/settings' }
+        { label: 'Настройки', icon: 'pi pi-cog', route: '/settings' }
       ]
     }
   ]);

@@ -10,11 +10,11 @@ import {CommonModule} from '@angular/common';
 })
 export class Logs {
   logs = signal([
-    { id: 1, time: '10:44:02', message: 'Воркер w-03 опубликовал комментарий на otvet.mail.ru', type: 'info' },
+    { id: 1, time: '10:44:02', message: 'Воркер w-03 опубликовал комментарий на YouTube', type: 'info' },
     { id: 2, time: '10:43:30', message: 'Задача #4 упала — Таймаут после 30с', type: 'error' },
     { id: 3, time: '10:42:15', message: 'Аккаунт kotov_88 успешно авторизован', type: 'success' },
     { id: 4, time: '10:40:10', message: 'Капча обнаружена на аккаунте captcha_x', type: 'warning' },
-    { id: 5, time: '10:38:55', message: 'Буст: +12 лайков на otvet.mail.ru/q/34560', type: 'boost' },
+    { id: 5, time: '10:38:55', message: 'Буст: +1 лайк на youtube.com/watch?v=dQw4w9WgXcQ', type: 'boost' },
     { id: 6, time: '10:33:11', message: 'Прокси 185.4.2.11 — задержка 67мс, ОК', type: 'info' },
   ]);
 

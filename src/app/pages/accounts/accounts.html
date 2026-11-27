@@ -1,68 +1,66 @@
-<div class="p-8 space-y-6 animate-in fade-in duration-500">
+<div class="page">
 
-  <div class="flex justify-between items-start mb-6">
+  <div class="page-header">
     <div>
-      <h1 class="text-2xl font-bold text-white tracking-tight">Аккаунты Mail.ru</h1>
-      <p class="text-zinc-500 text-xs mt-1">Сессии - otvet.mail.ru</p>
+      <span class="page-eyebrow"><i class="pi pi-users text-[10px]"></i> Система</span>
+      <h1 class="page-title mt-1.5">Аккаунты</h1>
+      <p class="page-subtitle">Аккаунты и сессии, через которые парсер заходит в соцсети</p>
     </div>
     <button (click)="openAddModal()"
-            class="bg-white hover:bg-zinc-200 text-black px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 shadow-sm">
-      <i class="pi pi-plus text-[10px]"></i> Добавить аккаунт
+            class="btn btn-primary">
+      <i class="pi pi-plus"></i> Добавить аккаунт
     </button>
   </div>
 
-  <div class="flex flex-wrap gap-2 mb-6">
+  <div class="flex flex-wrap gap-1.5">
     @for (tab of tabs; track tab.label) {
       <button (click)="setFilter(tab)"
-              class="px-3 py-1.5 rounded-full border text-xs transition-colors"
-              [class]="isActiveTab(tab)
-                ? 'border-white text-white bg-white/10'
-                : 'border-zinc-800 text-zinc-400 hover:border-zinc-600'">
+              class="chip" [class.active]="isActiveTab(tab)">
         {{ tab.label }}
       </button>
     }
   </div>
 
-  <section class="bg-dark-bg border border-zinc-800/80 rounded-xl overflow-hidden shadow-2xl">
+  <section class="card table-card">
     <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse whitespace-nowrap">
-        <thead class="bg-[#0d0d0d] border-b border-zinc-800/80 text-zinc-500">
+      <table class="crm-table whitespace-nowrap">
+        <thead>
         <tr>
-          <th class="px-6 py-4 text-xs font-medium">#</th>
-          <th class="px-6 py-4 text-xs font-medium">
-            <button (click)="toggleSort('login')" class="inline-flex items-center text-zinc-500 hover:text-white transition-colors cursor-pointer">
+          <th class="">#</th>
+          <th class="">
+            <button (click)="toggleSort('login')" class="inline-flex items-center gap-0.5 uppercase tracking-[0.08em] hover:text-foreground transition-colors">
               Логин<app-sort-icon [direction]="dirFor('login')"/>
             </button>
           </th>
-          <th class="px-6 py-4 text-xs font-medium">Метод входа</th>
-          <th class="px-6 py-4 text-xs font-medium">Телефон</th>
-          <th class="px-6 py-4 text-xs font-medium">
-            <button (click)="toggleSort('sessionInfo')" class="inline-flex items-center text-zinc-500 hover:text-white transition-colors cursor-pointer">
+          <th class="">Метод входа</th>
+          <th class="">Телефон</th>
+          <th class="">
+            <button (click)="toggleSort('sessionInfo')" class="inline-flex items-center gap-0.5 uppercase tracking-[0.08em] hover:text-foreground transition-colors">
               Session<app-sort-icon [direction]="dirFor('sessionInfo')"/>
             </button>
           </th>
-          <th class="px-6 py-4 text-xs font-medium">Прокси</th>
-          <th class="px-6 py-4 text-xs font-medium">Последнее</th>
-          <th class="px-6 py-4 text-xs font-medium">
-            <button (click)="toggleSort('riskScore')" class="inline-flex items-center text-zinc-500 hover:text-white transition-colors cursor-pointer">
+          <th class="">Прокси</th>
+          <th class="">Последнее</th>
+          <th class="">
+            <button (click)="toggleSort('riskScore')" class="inline-flex items-center gap-0.5 uppercase tracking-[0.08em] hover:text-foreground transition-colors">
               Риск<app-sort-icon [direction]="dirFor('riskScore')"/>
             </button>
           </th>
-          <th class="px-6 py-4 text-xs font-medium">
-            <button (click)="toggleSort('status')" class="inline-flex items-center text-zinc-500 hover:text-white transition-colors cursor-pointer">
+          <th class="">
+            <button (click)="toggleSort('status')" class="inline-flex items-center gap-0.5 uppercase tracking-[0.08em] hover:text-foreground transition-colors">
               Статус<app-sort-icon [direction]="dirFor('status')"/>
             </button>
           </th>
-          <th class="px-6 py-4 text-xs font-medium"></th>
+          <th class=""></th>
         </tr>
         </thead>
-        <tbody class="divide-y divide-zinc-800/40">
+        <tbody>
           @for (account of filteredAccounts(); track account.id; let i = $index) {
             <tr class="hover:bg-zinc-800/10 transition-colors">
-              <td class="px-6 py-4 text-xs text-zinc-500">{{ i + 1 }}</td>
-              <td class="px-6 py-4 text-xs text-zinc-300 font-medium">{{ account.login }}</td>
+              <td class="text-xs text-zinc-500">{{ i + 1 }}</td>
+              <td class="text-xs text-zinc-300 font-medium">{{ account.login }}</td>
 
-              <td class="px-6 py-4">
+              <td class="">
                 <span class="inline-flex items-center gap-1.5 text-xs text-zinc-300">
                   <span class="w-1.5 h-1.5 rounded-full shrink-0"
                         [style.background-color]="loginMethodColors[normalizeLoginMethod(account.loginMethod)] ?? '#6b7280'">
@@ -71,9 +69,9 @@
                 </span>
               </td>
 
-              <td class="px-6 py-4 text-xs text-zinc-400">{{ account.phoneNumber }}</td>
+              <td class="text-xs text-zinc-400">{{ account.phoneNumber }}</td>
 
-              <td class="px-6 py-4 text-xs">
+              <td class="text-xs">
                 @if (account.sessionInfo) {
                   <span class="inline-flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full shrink-0 bg-emerald-500"></span>
@@ -88,10 +86,10 @@
                 }
               </td>
 
-              <td class="px-6 py-4 text-xs text-zinc-400 font-mono">{{ account.proxyIp || '—' }}</td>
-              <td class="px-6 py-4 text-xs text-zinc-500">{{ account.lastUsedAtUtc }}</td>
+              <td class="text-xs text-zinc-400 font-mono">{{ account.proxyIp || '—' }}</td>
+              <td class="text-xs text-zinc-500">{{ account.lastUsedAtUtc }}</td>
 
-              <td class="px-6 py-4">
+              <td class="">
                 <div class="flex items-center gap-2">
                   <div class="w-16 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
                     <div [style.width.%]="account.riskScore"
@@ -106,7 +104,7 @@
                 </div>
               </td>
 
-              <td class="px-6 py-4">
+              <td class="">
                 @let cfg = store.getStatusConfig(account.status);
                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-medium border"
                       [ngClass]="cfg.class">
@@ -114,17 +112,25 @@
                 </span>
               </td>
 
-              <td class="px-6 py-4 text-right">
-                <div class="flex justify-end gap-3 text-zinc-500">
-                  <button (click)="openEditModal(account)" class="text-zinc-500 hover:text-white flex items-center">
+              <td class="text-right">
+                <div class="flex justify-end gap-1">
+                  <button (click)="openEditModal(account)" class="icon-action" title="Изменить">
                     <span class="icon-btn icon-retry"></span>
                   </button>
-                  <button (click)="deleteAccount(account.id)" class="text-zinc-500 hover:text-red-500 flex items-center">
+                  <button (click)="deleteAccount(account.id)" class="icon-action danger" title="Удалить">
                     <span class="icon-btn icon-trash"></span>
                   </button>
                 </div>
               </td>
             </tr>
+          } @empty {
+            <tr><td colspan="10">
+              <div class="empty-state">
+                <div class="empty-icon"><i class="pi pi-users"></i></div>
+                <p class="empty-title">Аккаунтов нет</p>
+                <p class="empty-text">Добавьте аккаунт, через который парсер будет заходить в соцсети.</p>
+              </div>
+            </td></tr>
           }
         </tbody>
       </table>

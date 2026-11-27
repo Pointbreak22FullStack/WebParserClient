@@ -1,10 +1,10 @@
 import { AccountStatus } from './account-status';
 
 export enum LoginMethod {
-  MailRu = 0,
-  YandexMail = 1,
-  YandexPhone = 2,
   VK = 3,
+  Google = 4,    // YouTube и Google-аккаунты
+  TikTok = 5,
+  Instagram = 6,
 }
 
 export interface Account {

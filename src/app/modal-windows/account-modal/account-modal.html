@@ -32,7 +32,7 @@
           </div>
           <div class="space-y-1.5">
             <label class="text-[11px] font-medium text-zinc-400 ml-1">Пароль</label>
-            <input formControlName="password" type="password" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white">
+            <input formControlName="password" type="password" [placeholder]="isEditMode() ? 'Оставьте пустым, чтобы не менять' : ''" class="w-full bg-[#0d0d0d] border border-zinc-800 rounded-md px-4 py-2.5 text-xs text-white">
           </div>
           </div>
         </div>

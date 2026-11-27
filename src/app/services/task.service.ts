@@ -18,6 +18,10 @@ export class TaskService {
     return this.http.post<string>(this.apiUrl, request);
   }
 
+  cancelTask(id: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${id}/cancel`, {});
+  }
+
   deleteTask(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

@@ -23,6 +23,8 @@ export class TaskStore {
     this.hub.entityChanged$
       .pipe(filter(n => n.group === 'tasks'))
       .subscribe(n => this.applyChange(n));
+
+    this.hub.taskNotification$.subscribe(n => this.toast.show(n.message, n.level, 6000));
   }
 
   loadTasks(): void {
@@ -33,8 +35,19 @@ export class TaskStore {
     });
   }
 
+  cancelTask(id: string): void {
+    this.taskService.cancelTask(id).subscribe({
+      next: () => this.toast.info('Отмена задачи запрошена'),
+      error: err => this.toast.error(err?.status === 409 ? 'Задача уже завершена' : 'Не удалось отменить задачу'),
+    });
+  }
+
   deleteTask(id: string): void {
-    this.taskService.deleteTask(id).subscribe();
+    this.taskService.deleteTask(id).subscribe({
+      error: err => this.toast.error(err?.status === 409
+        ? 'Сначала отмените задачу, выполняющуюся задачу удалить нельзя'
+        : 'Не удалось удалить задачу'),
+    });
   }
 
   private applyChange(n: HubNotification): void {

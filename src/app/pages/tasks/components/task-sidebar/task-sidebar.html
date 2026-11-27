@@ -108,11 +108,19 @@
           Перезапустить
         </button>
       }
-      <button class="flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium px-4 py-2.5 rounded-lg border border-red-500/20 transition-colors"
-              [class.flex-1]="!isRetryable()">
-        <i class="icon-btn icon-trash" style="color: rgb(248 113 113 / 0.7)"></i>
-        Удалить
-      </button>
+      @if (isActive()) {
+        <button class="flex-1 flex items-center justify-center gap-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-medium py-2.5 rounded-lg border border-amber-500/20 transition-colors"
+                (click)="cancelRequested.emit(task()!.id)">
+          Отменить
+        </button>
+      } @else {
+        <button class="flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium px-4 py-2.5 rounded-lg border border-red-500/20 transition-colors"
+                [class.flex-1]="!isRetryable()"
+                (click)="deleteRequested.emit(task()!.id)">
+          <i class="icon-btn icon-trash" style="color: rgb(248 113 113 / 0.7)"></i>
+          Удалить
+        </button>
+      }
     </div>
   }
 </aside>

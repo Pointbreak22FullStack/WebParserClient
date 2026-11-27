@@ -6,6 +6,13 @@ import { AuthService } from './auth-service';
 import { ChangeType, HubNotification } from '../interfaces/hub-notification';
 import { TaskLogEntry } from '../interfaces/task';
 
+export interface TaskNotification {
+  userId: string;
+  taskId: string;
+  level: 'success' | 'error' | 'info';
+  message: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class HubService implements OnDestroy {
   private auth = inject(AuthService);
@@ -16,6 +23,8 @@ export class HubService implements OnDestroy {
 
   readonly entityChanged$ = new Subject<HubNotification>();
   readonly taskLog$ = new Subject<TaskLogEntry>();
+  /** Уведомления о завершении задач (тосты). */
+  readonly taskNotification$ = new Subject<TaskNotification>();
 
   constructor() {
     this.connection = new HubConnectionBuilder()
@@ -36,6 +45,10 @@ export class HubService implements OnDestroy {
       };
       console.log('[HubService] onEntityChanged received:', normalized);
       this.zone.run(() => this.entityChanged$.next(normalized));
+    });
+
+    this.connection.on('onTaskNotification', (n: TaskNotification) => {
+      this.zone.run(() => this.taskNotification$.next(n));
     });
 
     this.connection.on('onTaskLog', (entry: TaskLogEntry) => {

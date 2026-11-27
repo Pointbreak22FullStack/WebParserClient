@@ -257,6 +257,12 @@ export class Tasks implements OnInit {
     );
   }
 
+  protected readonly TaskStatus = UserTaskStatus;
+
+  cancelTask(id: string): void {
+    this.taskStore.cancelTask(id);
+  }
+
   deleteTask(id: string): void {
     this.taskStore.deleteTask(id);
   }

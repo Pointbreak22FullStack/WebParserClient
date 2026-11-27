@@ -29,6 +29,8 @@ const STATUS_LABEL: Record<number, string> = {
 export class TaskSidebar {
   task = input<UserTaskDto | null>(null);
   closed = output<void>();
+  cancelRequested = output<string>();
+  deleteRequested = output<string>();
 
   getHistory(task: UserTaskDto): TaskHistoryEntry[] {
     return task.history ?? [];
@@ -121,6 +123,11 @@ export class TaskSidebar {
     if (!t || !t.result) return 0;
     const total = t.result.completedCount + t.result.inProgressCount + t.result.errorCount;
     return total ? Math.round((t.result.completedCount / total) * 100) : 0;
+  }
+
+  isActive(): boolean {
+    const s = this.task()?.status;
+    return s === UserTaskStatus.Pending || s === UserTaskStatus.Processing;
   }
 
   isRetryable(): boolean {

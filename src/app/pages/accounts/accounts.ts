@@ -22,16 +22,16 @@ export class Accounts implements OnInit {
   readonly LoginMethod = LoginMethod;
 
   readonly loginMethodLabels: Record<LoginMethod, string> = {
-    [LoginMethod.MailRu]: 'Mail.ru',
-    [LoginMethod.YandexMail]: 'Yandex Mail',
-    [LoginMethod.YandexPhone]: 'Yandex Phone',
+    [LoginMethod.Google]: 'Google / YouTube',
+    [LoginMethod.TikTok]: 'TikTok',
+    [LoginMethod.Instagram]: 'Instagram',
     [LoginMethod.VK]: 'VK',
   };
 
   readonly loginMethodColors: Record<LoginMethod, string> = {
-    [LoginMethod.MailRu]: '#005ff9',
-    [LoginMethod.YandexMail]: '#fc3f1d',
-    [LoginMethod.YandexPhone]: '#fc3f1d',
+    [LoginMethod.Google]: '#ff0033',
+    [LoginMethod.TikTok]: '#25f4ee',
+    [LoginMethod.Instagram]: '#dd2a7b',
     [LoginMethod.VK]: '#0077ff',
   };
 
@@ -148,7 +148,7 @@ export class Accounts implements OnInit {
   normalizeLoginMethod(raw: unknown): LoginMethod {
     const n = Number(raw);
     if (!Number.isNaN(n)) return n as LoginMethod;
-    return ((LoginMethod as Record<string, unknown>)[raw as string] as LoginMethod) ?? LoginMethod.MailRu;
+    return ((LoginMethod as Record<string, unknown>)[raw as string] as LoginMethod) ?? LoginMethod.Google;
   }
 
   private static normalizeStatus(raw: unknown): AccountStatus {

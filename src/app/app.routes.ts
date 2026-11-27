@@ -5,7 +5,6 @@ import {Register} from './pages/register/register';
 import {Tasks} from './pages/tasks/tasks';
 import {NewTask} from './pages/new-task/new-task';
 import {Comments} from './pages/comments/comments';
-import {LikeBooster} from './pages/like-booster/like-booster';
 import {Monitoring} from './pages/monitoring/monitoring';
 import {GenAi} from './pages/gen-ai/gen-ai';
 import {Accounts} from './pages/accounts/accounts';
@@ -22,7 +21,6 @@ export const routes: Routes = [
   { path: 'tasks', component: Tasks,canActivate: [authGuard] },
   { path: 'new-task', component: NewTask ,canActivate: [authGuard]},
   { path: 'comments', component: Comments,canActivate: [authGuard] },
-  { path: 'like-booster', component: LikeBooster,canActivate: [authGuard] },
   { path: 'monitoring', component: Monitoring ,canActivate: [authGuard]},
   { path: 'gen-ai', component: GenAi,canActivate: [authGuard] },
   { path: 'accounts', component: Accounts,canActivate: [authGuard] },

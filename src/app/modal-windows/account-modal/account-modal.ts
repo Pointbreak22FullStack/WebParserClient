@@ -22,14 +22,14 @@ export class AccountModal implements OnInit {
   closeModal = output<void>();
 
   loginMethods = [
-    { value: LoginMethod.MailRu, label: 'Mail.ru' },
-    { value: LoginMethod.YandexMail, label: 'Yandex Mail' },
-    { value: LoginMethod.YandexPhone, label: 'Yandex Phone' },
+    { value: LoginMethod.Google, label: 'Google / YouTube' },
+    { value: LoginMethod.TikTok, label: 'TikTok' },
+    { value: LoginMethod.Instagram, label: 'Instagram' },
     { value: LoginMethod.VK, label: 'VK' },
   ];
 
   accountForm = this.fb.group({
-    loginMethod: [LoginMethod.MailRu],
+    loginMethod: [LoginMethod.Google],
     login: [''],
     password: [''],
     countryCode: ['+373'],
@@ -59,7 +59,7 @@ export class AccountModal implements OnInit {
       const raw = data.loginMethod as unknown;
       const n = Number(raw);
       const loginMethod: LoginMethod = Number.isNaN(n)
-        ? (((LoginMethod as Record<string, unknown>)[raw as string] as LoginMethod) ?? LoginMethod.MailRu)
+        ? (((LoginMethod as Record<string, unknown>)[raw as string] as LoginMethod) ?? LoginMethod.Google)
         : n as LoginMethod;
 
       this.accountForm.patchValue({

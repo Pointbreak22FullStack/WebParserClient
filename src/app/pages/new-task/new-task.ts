@@ -3,8 +3,7 @@ import { TaskType } from '../../interfaces/task-type';
 import {
   LucideDynamicIcon,
   LucideFileText,
-  LucideFlag, LucideMessageSquare,
-  LucideThumbsDown,
+  LucideMessageSquare,
   LucideThumbsUp
 } from '@lucide/angular';
 import { NgClass } from '@angular/common';
@@ -31,9 +30,7 @@ export class NewTask implements OnDestroy {
 
   taskTypes = signal<TaskType[]>([
     { label: 'Комментарий', desc: '+ ссылка', icon: LucideMessageSquare },
-    { label: 'Лайки',       desc: '+50',      icon: LucideThumbsUp },
-    { label: 'Дизлайки',    desc: '+50',      icon: LucideThumbsDown },
-    { label: 'Репорт',      desc: '×4',       icon: LucideFlag }
+    { label: 'Лайки',       desc: '+50',      icon: LucideThumbsUp }
   ]);
 
   delayOptions = signal([
@@ -65,9 +62,7 @@ export class NewTask implements OnDestroy {
 
   private typeMapping: Record<string, number> = {
     'Комментарий': 1,
-    'Лайки':       2,
-    'Дизлайки':    3,
-    'Репорт':      4
+    'Лайки':       2
   };
 
   onSubmit(event: Event) {

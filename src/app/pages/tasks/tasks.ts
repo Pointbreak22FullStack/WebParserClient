@@ -4,9 +4,7 @@ import { RouterLink } from '@angular/router';
 import {
   LucideActivity,
   LucideDynamicIcon,
-  LucideFlag,
   LucideMessageSquare,
-  LucideThumbsDown,
   LucideThumbsUp,
 } from '@lucide/angular';
 import { UserTaskDto, UserTaskType, UserTaskStatus, TaskAccountStatus } from '../../interfaces/task';
@@ -21,8 +19,6 @@ type SortDir = 'asc' | 'desc' | null;
 const TYPE_LABEL: Record<number, string> = {
   [UserTaskType.Comment]:    'Комментарий',
   [UserTaskType.Like]:       'Лайки',
-  [UserTaskType.Dislike]:    'Дизлайки',
-  [UserTaskType.Report]:     'Репорт',
   [UserTaskType.AutoReply]:  'Авто-ответ',
   [UserTaskType.Monitoring]: 'Мониторинг',
 };
@@ -38,8 +34,6 @@ const STATUS_LABEL: Record<number, string> = {
 const TYPE_FILTER_MAP: Record<string, UserTaskType> = {
   'Комментарий': UserTaskType.Comment,
   'Лайки':       UserTaskType.Like,
-  'Дизлайки':    UserTaskType.Dislike,
-  'Репорт':      UserTaskType.Report,
   'Авто-ответ':  UserTaskType.AutoReply,
   'Мониторинг':  UserTaskType.Monitoring,
 };
@@ -76,8 +70,6 @@ export class Tasks implements OnInit {
   getTaskIcon(type: UserTaskType) {
     switch (type) {
       case UserTaskType.Like:       return LucideThumbsUp;
-      case UserTaskType.Dislike:    return LucideThumbsDown;
-      case UserTaskType.Report:     return LucideFlag;
       case UserTaskType.Monitoring: return LucideActivity;
       default:                      return LucideMessageSquare;
     }
@@ -112,7 +104,7 @@ export class Tasks implements OnInit {
     return items;
   }
 
-  readonly typeFilters = ['Все', 'Комментарий', 'Лайки', 'Дизлайки', 'Репорт', 'Авто-ответ', 'Мониторинг'];
+  readonly typeFilters = ['Все', 'Комментарий', 'Лайки', 'Авто-ответ', 'Мониторинг'];
   readonly statusFilters = ['Все', 'В очереди', 'В работе', 'Выполнено', 'Ошибка', 'Отменено'];
 
   readonly searchQuery = signal('');

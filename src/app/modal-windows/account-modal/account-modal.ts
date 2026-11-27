@@ -58,9 +58,13 @@ export class AccountModal implements OnInit {
 
       const raw = data.loginMethod as unknown;
       const n = Number(raw);
-      const loginMethod: LoginMethod = Number.isNaN(n)
-        ? (((LoginMethod as Record<string, unknown>)[raw as string] as LoginMethod) ?? LoginMethod.Google)
+      const parsed = Number.isNaN(n)
+        ? (LoginMethod as Record<string, unknown>)[raw as string] as LoginMethod | undefined
         : n as LoginMethod;
+      // Старые аккаунты Яндекса/Mail.ru (значения 0–2) больше не поддерживаются — предлагаем выбрать заново.
+      const loginMethod: LoginMethod = parsed !== undefined && Object.values(LoginMethod).includes(parsed)
+        ? parsed
+        : LoginMethod.Google;
 
       this.accountForm.patchValue({
         loginMethod,

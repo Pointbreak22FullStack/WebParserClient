@@ -1,15 +1,17 @@
-<div class="min-h-screen bg-[#050505] flex items-center justify-center p-4">
-  <div class="w-full max-w-[400px] bg-[#0d0d0d] border border-zinc-800/50 rounded-2xl p-8 shadow-2xl">
+<div class="relative min-h-screen overflow-hidden bg-background flex items-center justify-center p-4">
+  <div class="pointer-events-none absolute inset-0 bg-grid"></div>
+  <div class="glow-orb w-[520px] h-[520px] -top-64 left-1/2 -translate-x-1/2"></div>
+  <div class="card relative w-full max-w-[420px] !rounded-[20px] p-8">
 
     <div class="flex justify-center mb-6">
-      <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg shadow-white/5">
-        <span class="text-black font-bold text-xl">!</span>
+      <div class="w-12 h-12 rounded-[14px] grid place-items-center bg-gradient-to-br from-accent-300 via-accent-500 to-accent-600 shadow-[inset_0_1px_0_rgb(255_255_255/0.45),0_12px_30px_-8px_var(--color-accent-500)]">
+        <span class="font-display text-[#0b1203] font-extrabold text-xl">A</span>
       </div>
     </div>
 
     <div class="text-center mb-8">
-      <h1 class="text-xl font-semibold text-white">
-        Добро пожаловать в <span class="text-[#84cc16]">AutoPanel</span>
+      <h1 class="font-display text-[22px] font-bold text-foreground tracking-tight">
+        Добро пожаловать в <span class="text-gradient">WebParser</span>
       </h1>
       <div class="mt-4 space-y-1">
         <p class="text-sm text-zinc-200 font-medium">Создать аккаунт</p>
@@ -26,55 +28,55 @@
         </div>
       }
       <div class="space-y-2">
-        <label class="text-xs font-medium text-zinc-400 ml-1">Имя</label>
+        <label class="field-label !mb-0 ml-1">Имя</label>
         <input
           name="name"
           [(ngModel)]="registerData.name"
           type="text"
           placeholder="Никита"
           required
-          class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-[#84cc16]/50 focus:border-[#84cc16]/50 transition-all"
+          class="field !h-11"
         >
       </div>
 
       <div class="space-y-2">
-        <label class="text-xs font-medium text-zinc-400 ml-1">Логин</label>
+        <label class="field-label !mb-0 ml-1">Логин</label>
         <input
           name="email"
           [(ngModel)]="registerData.email"
           type="email"
           placeholder="m@example.com"
           required
-          class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-[#84cc16]/50 focus:border-[#84cc16]/50 transition-all"
+          class="field !h-11"
         >
       </div>
 
       <div class="space-y-2">
-        <label class="text-xs font-medium text-zinc-400 ml-1">Пароль</label>
+        <label class="field-label !mb-0 ml-1">Пароль</label>
         <input
           name="password"
           [(ngModel)]="registerData.password"
           type="password"
           required
-          class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-[#84cc16]/50 focus:border-[#84cc16]/50 transition-all"
+          class="field !h-11"
         >
       </div>
 
       <div class="space-y-2">
-        <label class="text-xs font-medium text-zinc-400 ml-1">Подтвердите пароль</label>
+        <label class="field-label !mb-0 ml-1">Подтвердите пароль</label>
         <input
           name="confirmPassword"
           [(ngModel)]="registerData.confirmPassword"
           type="password"
           required
-          class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-[#84cc16]/50 focus:border-[#84cc16]/50 transition-all"
+          class="field !h-11"
         >
       </div>
 
       <button
         type="submit"
         [disabled]="isLoading()"
-        class="w-full bg-[#84cc16] hover:bg-[#a3e635] text-black font-semibold py-2.5 rounded-lg text-sm transition-colors mt-4 shadow-lg shadow-[#84cc16]/10"
+        class="btn btn-primary w-full !h-11 mt-2 text-[13.5px]"
       >
         {{ isLoading() ? 'Создание...' : 'Создать аккаунт' }}
       </button>

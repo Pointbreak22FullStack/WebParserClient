@@ -5,8 +5,6 @@ import { UserTaskDto, UserTaskType, UserTaskStatus, TaskAccountStatus, TaskHisto
 const TYPE_LABEL: Record<number, string> = {
   [UserTaskType.Comment]:    'Комментарий',
   [UserTaskType.Like]:       'Лайки',
-  [UserTaskType.Dislike]:    'Дизлайки',
-  [UserTaskType.Report]:     'Репорт',
   [UserTaskType.AutoReply]:  'Авто-ответ',
   [UserTaskType.Monitoring]: 'Мониторинг',
 };

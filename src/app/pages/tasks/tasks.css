@@ -37,7 +37,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
-  background: #9eff00;
+  background: #84cc16;
   border: none;
   border-radius: 8px;
   color: #0a0a0a;
@@ -47,7 +47,7 @@
   transition: background 0.15s;
   text-decoration: none;
 }
-.btn-primary:hover { background: #85d600; }
+.btn-primary:hover { background: #a3e635; }
 
 .btn-outline-sm {
   display: inline-flex;
@@ -98,9 +98,10 @@
 
 /* ── Table container ─────────────────────────────── */
 .table-wrap {
-  background: rgba(17, 17, 17, 0.5);
-  border: 1px solid rgba(39, 39, 42, 0.5);
-  border-radius: 12px;
+  background-image: linear-gradient(180deg, var(--color-surface-elevated), var(--color-surface) 60%);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.04), 0 16px 40px -24px rgb(0 0 0 / 0.6);
   overflow: hidden;
 }
 
@@ -129,8 +130,8 @@
   cursor: pointer;
 }
 .table-row:hover { background: rgba(255, 255, 255, 0.025); }
-.table-row.selected { background: rgba(158, 255, 0, 0.04); }
-.table-row.selected .td-cell { border-bottom-color: rgba(158, 255, 0, 0.08); }
+.table-row.selected { background: rgba(132, 204, 22, 0.04); }
+.table-row.selected .td-cell { border-bottom-color: rgba(132, 204, 22, 0.08); }
 
 /* ── Sort button ─────────────────────────────────── */
 .sort-btn {
@@ -197,8 +198,8 @@
 }
 .checkbox:hover { border-color: #71717a; }
 .checkbox.checked {
-  background: #9eff00;
-  border-color: #9eff00;
+  background: #84cc16;
+  border-color: #84cc16;
 }
 .checkbox.checked::after {
   content: '';
@@ -210,13 +211,13 @@
   transform: translateY(-1px) rotate(-45deg);
 }
 .checkbox.indeterminate {
-  border-color: #9eff00;
+  border-color: #84cc16;
 }
 .checkbox.indeterminate::after {
   content: '';
   display: block;
   width: 8px;
   height: 1.5px;
-  background: #9eff00;
+  background: #84cc16;
   border-radius: 1px;
 }

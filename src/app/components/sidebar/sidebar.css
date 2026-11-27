@@ -1,17 +1,99 @@
-/* Кастомизация скроллбара для меню */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+:host { display: block; }
+
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 11px;
+  background: linear-gradient(140deg, var(--color-accent-300), var(--color-accent-500) 55%, var(--color-accent-600));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.45),
+    0 0 0 1px rgb(0 0 0 / 0.4),
+    0 10px 26px -8px color-mix(in oklab, var(--color-accent-500) 70%, transparent);
+}
+.logo-mark span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  color: #0b1203;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #27272a; /* zinc-800 */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  height: 2.25rem;
+  padding: 0 0.75rem;
   border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-muted-foreground);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.nav-item:hover { color: var(--color-foreground); background: var(--color-surface-hover); }
+
+.nav-icon {
+  font-size: 14px;
+  width: 1rem;
+  text-align: center;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+.nav-item:hover .nav-icon { opacity: 1; }
+
+.nav-item.nav-active {
+  color: var(--color-foreground);
+  background: linear-gradient(90deg, color-mix(in oklab, var(--color-accent-500) 14%, transparent), rgb(255 255 255 / 0.02));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-accent-500) 18%, transparent);
+}
+.nav-item.nav-active .nav-icon { opacity: 1; color: var(--color-accent-400); }
+.nav-item.nav-active::before {
+  content: '';
+  position: absolute;
+  left: -0.75rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--color-accent-500);
+  box-shadow: 0 0 12px var(--color-accent-500);
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46; /* zinc-700 */
+.nav-badge {
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #0b1203;
+  background: var(--color-accent-500);
+  box-shadow: 0 0 12px -2px var(--color-accent-500);
+  font-variant-numeric: tabular-nums;
 }
+
+.profile-menu {
+  width: 15rem;
+  border-radius: 14px;
+  border: 1px solid var(--color-border-strong);
+  background: linear-gradient(180deg, #17171b, #111113);
+  box-shadow: 0 24px 60px -16px rgb(0 0 0 / 0.8);
+  animation: modal-in 0.18s ease both;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--color-muted-foreground);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.menu-item:hover { color: var(--color-foreground); background: var(--color-surface-hover); }
+.menu-item i { font-size: 12px; }

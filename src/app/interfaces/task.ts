@@ -1,8 +1,6 @@
 export enum UserTaskType {
   Comment    = 1,
   Like       = 2,
-  Dislike    = 3,
-  Report     = 4,
   AutoReply  = 5,
   Monitoring = 6,
 }
